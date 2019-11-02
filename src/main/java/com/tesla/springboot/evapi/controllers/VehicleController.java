@@ -28,11 +28,11 @@ public class VehicleController {
 
     @GetMapping("/vehicles")
     public Iterable<Vehicle> findAllVehicles(@RequestParam(value = "display_name",required = false) String displayName,
-                                             @RequestParam(value = "size",required = false) Integer size){
+                                             @RequestParam(value = "size",required = false) Integer size,
+                                             @RequestParam(value = "page",required = false) Integer page){
 
-        if(size == null){
-            size = Integer.valueOf(100);
-        }
+
+        //Search based on if the display name was set or not
 
         if (displayName == null) {
             return vehicleService.findAllVehicles(size);
@@ -57,8 +57,4 @@ public class VehicleController {
     public DriveState findDriveStateById(@PathVariable Long id) {
         return driveStateService.findDriveStateById(id);
     }
-
-
-
-
 }
