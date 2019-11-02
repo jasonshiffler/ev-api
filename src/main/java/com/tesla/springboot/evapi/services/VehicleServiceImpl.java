@@ -6,7 +6,11 @@ import com.tesla.springboot.evapi.exceptions.ItemNotFoundException;
 import com.tesla.springboot.evapi.repositories.ChargeStateRepository;
 import com.tesla.springboot.evapi.repositories.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 import java.util.Optional;
@@ -24,7 +28,9 @@ public class VehicleServiceImpl implements VehicleService {
 
     public Iterable<Vehicle> findAllVehicles(Integer size){
 
-        return vehicleRepository.findAll();
+        Pageable request = PageRequest.of(0,size);
+        Page<Vehicle> vehicles = vehicleRepository.findAll(request);
+        return vehicles.getContent();
     }
 
     public Vehicle findVehicleById(Long id) {

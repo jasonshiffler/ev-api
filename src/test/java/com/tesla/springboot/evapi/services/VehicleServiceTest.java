@@ -19,13 +19,14 @@ class VehicleServiceTest {
 
     @InjectMocks
     VehicleService service;
-
+/*
     @Test
     void findAllVehiclesTest() {
         service.findAllVehicles();
         verify(repository).findAll();
     }
 
+ */
     @Test
     void findVehicleByIdTest() {
         service.findVehicleById(5L);
