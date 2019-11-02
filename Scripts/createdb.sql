@@ -36,6 +36,7 @@ CREATE TABLE drive_state
   FOREIGN KEY(id) REFERENCES vehicle(id) ON DELETE CASCADE
 );
 
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 INSERT INTO `vehicle`
 (vin,color,user_id,display_name)
@@ -48,6 +49,62 @@ VALUES(100);
 INSERT INTO drive_state
 (heading, longitude, latitude)
 VALUES(90,-76.125,36.8222);
+
+
+
+INSERT INTO `vehicle`
+(vin,color,user_id,display_name)
+VALUES(1111111111112,"purple","vshiffler","purple car");
+
+INSERT INTO charge_state
+(percent_charged)
+VALUES(58);
+
+INSERT INTO drive_state
+(heading, longitude, latitude)
+VALUES(45,-77.125,37.5222);
+
+
+
+INSERT INTO `vehicle`
+(vin,color,user_id,display_name)
+VALUES(1111111111113,"orange","gshiffler","orange car");
+
+INSERT INTO charge_state
+(percent_charged)
+VALUES(99);
+
+INSERT INTO drive_state
+(heading, longitude, latitude)
+VALUES(90,-74.1432,38.5222);
+
+
+INSERT INTO `vehicle`
+(vin,color,user_id,display_name)
+VALUES(1111111111114,"red","jmshiffler","red car");
+
+INSERT INTO charge_state
+(percent_charged)
+VALUES(93);
+
+INSERT INTO drive_state
+(heading, longitude, latitude)
+VALUES(270,-72.1432,34.5222);
+
+
+INSERT INTO `vehicle`
+(vin,color,user_id,display_name)
+VALUES(1111111111114,"green","rshiffler","green car");
+
+INSERT INTO charge_state
+(percent_charged)
+VALUES(64);
+
+INSERT INTO drive_state
+(heading, longitude, latitude)
+VALUES(245,-75.1432,35.3222);
+
+
 
 ****************************************8
 

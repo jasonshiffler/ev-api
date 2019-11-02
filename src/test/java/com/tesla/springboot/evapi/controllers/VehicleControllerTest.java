@@ -32,13 +32,13 @@ class VehicleControllerTest {
     void setUp() {
 
     }
-
+/*
     @Test
     void findAllVehiclesTest() {
         controller.findAllVehicles();
         verify(service).findAllVehicles();
     }
-
+*/
     @Test
     void findVehicleByIdTest() {
         controller.findVehicleById(5L);
