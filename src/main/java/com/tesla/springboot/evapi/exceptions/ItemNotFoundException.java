@@ -14,4 +14,8 @@ public class ItemNotFoundException extends RuntimeException {
         super(itemType + " with {id} = " + id + " not found");
     }
 
+    public ItemNotFoundException(String itemType){
+        super(itemType + " not found");
+    }
+
 }

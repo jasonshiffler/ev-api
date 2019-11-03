@@ -9,7 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-
 import java.util.Optional;
 
 @Service
@@ -18,6 +17,12 @@ public class VehicleServiceImpl implements VehicleService {
     private final VehicleRepository vehicleRepository;
     private final AdjustQuerySizeService adjustQuerySizeService;
 
+    /**
+     *
+     * @param vehicleRepository
+     * @param adjustQuerySizeService
+     */
+
 
     @Autowired
     VehicleServiceImpl(VehicleRepository vehicleRepository, AdjustQuerySizeService adjustQuerySizeService){
@@ -25,14 +30,37 @@ public class VehicleServiceImpl implements VehicleService {
         this.adjustQuerySizeService = adjustQuerySizeService;
     }
 
-    public Iterable<Vehicle> findAllVehicles(Integer size){
+    /**
+     * Return all vehicles while allowing the search results to be paged and sized.
+     *
+     * @param size
+     * @param page
+     * @return
+     */
+
+    @Override
+    public Iterable<Vehicle> findAllVehicles(Integer size, Integer page) {
 
         size = adjustQuerySizeService.AdjustQuerySize(size);
-        Pageable request = PageRequest.of(0,size);
+        Pageable request = PageRequest.of(page, size);
         Page<Vehicle> vehicles = vehicleRepository.findAll(request);
+
+        //Throw an exception if the page doesn't contain any results
+        if (vehicles.hasContent() == false)
+            throw new ItemNotFoundException("vehicle");
+
+        //else return the content of the search
         return vehicles.getContent();
     }
 
+    /**
+     * Find the vehicle with the matching id
+     *
+     * @param id
+     * @return - the V
+     */
+
+    @Override
     public Vehicle findVehicleById(Long id) {
 
         Optional<Vehicle> vehicle = vehicleRepository.findById(id);
@@ -44,10 +72,28 @@ public class VehicleServiceImpl implements VehicleService {
         }
     }
 
+    /**
+     * Find vehicles that contain a matching term in the display name
+     *
+     * @param displayName - The display name of the vehicle we're searching on.
+     * @param size - The number of results we want back
+     * @param page - Which page of results we'd like
+     * @return - The vehicles with a display name that contains the displayName field that was passed in.
+     */
+
     @Override
-    public Iterable<Vehicle> findAllVehiclesByDisplayName(String displayName, Integer size) {
-        return vehicleRepository.findByDisplayNameContaining(displayName);
+    public Iterable<Vehicle> findAllVehiclesByDisplayName(String displayName, Integer size, Integer page) {
+
+        size = adjustQuerySizeService.AdjustQuerySize(size);
+        Pageable request = PageRequest.of(page, size);
+        Page<Vehicle> vehicles = vehicleRepository.findByDisplayNameContaining(displayName, request);
+
+        //Throw an exception if the page doesn't contain any results
+        if (vehicles.hasContent() == false)
+            throw new ItemNotFoundException("vehicle");
+
+        //else return the content of the search
+        return vehicles.getContent();
+
     }
-
-
 }

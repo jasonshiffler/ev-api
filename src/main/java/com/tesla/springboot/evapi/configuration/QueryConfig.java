@@ -1,3 +1,8 @@
+/**
+ * This class allows us to inject database query configuration from a properties file into the application so
+ * we don't have to adjust the query size parameters within the source code. *
+ **/
+
 package com.tesla.springboot.evapi.configuration;
 
 import org.springframework.beans.factory.annotation.Value;

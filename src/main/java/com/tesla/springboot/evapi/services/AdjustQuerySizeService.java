@@ -1,3 +1,8 @@
+/**
+ * This service will adjust the query size parameter passed in from the api request based on our application
+ * configuration
+ */
+
 package com.tesla.springboot.evapi.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +15,8 @@ public class AdjustQuerySizeService {
     private Integer maxQuerySize;
     private Integer defaultQuerySize;
 
+    //Pull in the configuration Beans using constructor injection
+
     @Autowired
     AdjustQuerySizeService(@Qualifier("maxQuerySize") Integer max,
                            @Qualifier("defaultQuerySize") Integer defSize) {
@@ -17,6 +24,10 @@ public class AdjustQuerySizeService {
         maxQuerySize = max;
     }
 
+    /**
+     * Adjust the api query size based on what's acceptable in our application configuration
+     * Set a reasonable default if no size was specified
+     * */
 
     public Integer AdjustQuerySize(Integer size) {
         //If the query size wasn't set use a default size to 25
@@ -28,7 +39,6 @@ public class AdjustQuerySizeService {
             size = Integer.valueOf(this.maxQuerySize);
         }
         return size;
-
     }
 
 }

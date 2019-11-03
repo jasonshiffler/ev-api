@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface VehicleService {
 
-     Iterable<Vehicle> findAllVehicles(Integer size);
+     Iterable<Vehicle> findAllVehicles(Integer size, Integer page);
      Vehicle findVehicleById(Long id);
-     Iterable<Vehicle> findAllVehiclesByDisplayName(String displayName, Integer size);
+     Iterable<Vehicle> findAllVehiclesByDisplayName(String displayName, Integer size, Integer page);
 }
