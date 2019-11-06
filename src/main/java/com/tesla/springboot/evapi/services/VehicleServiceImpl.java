@@ -3,6 +3,7 @@ package com.tesla.springboot.evapi.services;
 import com.tesla.springboot.evapi.entities.Vehicle;
 import com.tesla.springboot.evapi.exceptions.ItemNotFoundException;
 import com.tesla.springboot.evapi.repositories.VehicleRepository;
+import com.tesla.springboot.evapi.utility.AdjustQuerySizeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

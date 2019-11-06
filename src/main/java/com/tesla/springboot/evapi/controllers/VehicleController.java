@@ -6,10 +6,15 @@ import com.tesla.springboot.evapi.entities.Vehicle;
 import com.tesla.springboot.evapi.services.ChargeStateService;
 import com.tesla.springboot.evapi.services.DriveStateService;
 import com.tesla.springboot.evapi.services.VehicleService;
+import com.tesla.springboot.evapi.utility.LogFormat;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
+@Slf4j
 public class VehicleController {
 
     private final VehicleService vehicleService;
@@ -27,7 +32,10 @@ public class VehicleController {
     @GetMapping("/vehicles")
     public Iterable<Vehicle> findAllVehicles(@RequestParam(value = "display_name",required = false) String displayName,
                                              @RequestParam(value = "size",required = false) Integer size,
-                                             @RequestParam(value = "page",required = false) Integer page){
+                                             @RequestParam(value = "page",required = false) Integer page,
+                                             HttpServletRequest request){
+
+        log.info(LogFormat.urlLogFormat(request));
 
         // Set a default value for the page if none was passed in.
         if (page == null)

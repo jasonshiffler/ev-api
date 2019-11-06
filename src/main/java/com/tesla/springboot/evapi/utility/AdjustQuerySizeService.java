@@ -3,7 +3,7 @@
  * configuration
  */
 
-package com.tesla.springboot.evapi.services;
+package com.tesla.springboot.evapi.utility;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

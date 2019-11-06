@@ -10,10 +10,9 @@ import org.springframework.web.bind.annotation.*;
 public class RestExceptionHandler {
 
     @ExceptionHandler(ItemNotFoundException.class)
-    public ResponseEntity<Object> handleVehicleNotFoundException(ItemNotFoundException e){
+    public ResponseEntity<Object> handleItemNotFoundException(ItemNotFoundException e){
         ApiError err = new ApiError(HttpStatus.NOT_FOUND,e);
         return new ResponseEntity<Object>(err,err.getStatus());
     }
-
 
 }

@@ -30,4 +30,9 @@ public class Vehicle extends AbstractEntity{
     @JoinColumn(name="id")
     @JsonProperty("drive_state")
     private  DriveState driveState;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="id")
+    @JsonProperty("vehicle_config")
+    private  VehicleConfig vehicleConfig;
 }

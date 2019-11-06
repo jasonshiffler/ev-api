@@ -36,6 +36,38 @@ CREATE TABLE drive_state
   FOREIGN KEY(id) REFERENCES vehicle(id) ON DELETE CASCADE
 );
 
+CREATE TABLE vehicle_config
+(
+ id int  NOT NULL AUTO_INCREMENT,
+ can_accept_navigation_requests boolean,
+ can_actuate_trunks boolean,
+ car_special_type varchar(32),
+ car_type varchar(32),
+ charge_port_type varchar(8),
+ eu_vehicle boolean,
+ exterior_color varchar(32),
+ has_air_suspension boolean,
+ has_ludicrous_mode boolean,
+ motorized_charge_port boolean,
+ perf_config varchar(32),
+ plg boolean,
+ rear_seat_heaters int,
+ rear_seat_type int,
+ rhd boolean,
+ roof_color varchar(32),
+ seat_type int,
+ spoiler_type varchar(32),
+ sun_roof_installed int,
+ third_row_seats varchar(32),
+ time_stamp double,
+ trim_badging varchar(32),
+ wheel_type varchar(32),
+ created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+ PRIMARY KEY (id),
+ FOREIGN KEY(id) REFERENCES vehicle(id) ON DELETE CASCADE
+);
+
+
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 INSERT INTO `vehicle`
@@ -50,6 +82,13 @@ INSERT INTO drive_state
 (heading, longitude, latitude)
 VALUES(90,-76.125,36.8222);
 
+INSERT INTO vehicle_config
+(can_accept_navigation_requests ,can_actuate_trunks , car_special_type ,car_type ,
+ charge_port_type ,eu_vehicle , exterior_color ,has_air_suspension , has_ludicrous_mode , motorized_charge_port ,
+ perf_config , plg , rear_seat_heaters, rear_seat_type , rhd, roof_color , seat_type, spoiler_type , sun_roof_installed ,
+ third_row_seats , time_stamp , trim_badging , wheel_type )
+ VALUES(true,true,"base","modelx","US",false,"MetallicBlack",true,false,true,"P1",true,3,3,false,"None",0,"Passive",
+ 0,"FuturisFoldFlat",1558229319160,"90d","AeroTurbine20");
 
 
 INSERT INTO `vehicle`
