@@ -28,9 +28,18 @@ CREATE TABLE charge_state
 CREATE TABLE drive_state
 (
   id int  NOT NULL AUTO_INCREMENT,
+  shift_state varchar(32),
+  speed int,
+  power int,
   heading int,
   longitude float,
   latitude float,
+  gps_as_of double,
+  native_location_supported int,
+  native_latitude float,
+  native_longitude float,
+  native_type varchar(32),
+  time_stamp double,
   created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
   FOREIGN KEY(id) REFERENCES vehicle(id) ON DELETE CASCADE
@@ -78,18 +87,24 @@ INSERT INTO charge_state
 (percent_charged)
 VALUES(100);
 
+
 INSERT INTO drive_state
-(heading, longitude, latitude)
-VALUES(90,-76.125,36.8222);
+(power, latitude,longitude,heading,gps_as_of,native_location_supported,native_latitude,
+native_longitude,native_type,time_stamp)
+VALUES(0, 40.459728, -79.923447,340, 1532927048,1,40.459728,-79.923447,"wgs",1532927316568);
+
+
 
 INSERT INTO vehicle_config
 (can_accept_navigation_requests ,can_actuate_trunks , car_special_type ,car_type ,
  charge_port_type ,eu_vehicle , exterior_color ,has_air_suspension , has_ludicrous_mode , motorized_charge_port ,
  perf_config , plg , rear_seat_heaters, rear_seat_type , rhd, roof_color , seat_type, spoiler_type , sun_roof_installed ,
  third_row_seats , time_stamp , trim_badging , wheel_type )
+
  VALUES(true,true,"base","modelx","US",false,"MetallicBlack",true,false,true,"P1",true,3,3,false,"None",0,"Passive",
  0,"FuturisFoldFlat",1558229319160,"90d","AeroTurbine20");
 
+===============================
 
 INSERT INTO `vehicle`
 (vin,color,user_id,display_name)
@@ -100,9 +115,21 @@ INSERT INTO charge_state
 VALUES(58);
 
 INSERT INTO drive_state
-(heading, longitude, latitude)
-VALUES(45,-77.125,37.5222);
+(power, latitude,longitude,heading,gps_as_of,native_location_supported,native_latitude,
+native_longitude,native_type,time_stamp)
+VALUES(0, 40.459728, -79.923447,340, 1532927048,1,40.459728,-79.923447,"wgs",1532927316568);
 
+
+INSERT INTO vehicle_config
+(can_accept_navigation_requests ,can_actuate_trunks , car_special_type ,car_type ,
+ charge_port_type ,eu_vehicle , exterior_color ,has_air_suspension , has_ludicrous_mode , motorized_charge_port ,
+ perf_config , plg , rear_seat_heaters, rear_seat_type , rhd, roof_color , seat_type, spoiler_type , sun_roof_installed ,
+ third_row_seats , time_stamp , trim_badging , wheel_type )
+
+ VALUES(true,true,"base","modelx","US",false,"MetallicBlack",true,false,true,"P1",true,3,3,false,"None",0,"Passive",
+ 0,"FuturisFoldFlat",1558229319160,"90d","AeroTurbine20");
+
+================================
 
 
 INSERT INTO `vehicle`
@@ -113,10 +140,22 @@ INSERT INTO charge_state
 (percent_charged)
 VALUES(99);
 
-INSERT INTO drive_state
-(heading, longitude, latitude)
-VALUES(90,-74.1432,38.5222);
 
+INSERT INTO drive_state
+(power, latitude,longitude,heading,gps_as_of,native_location_supported,native_latitude,
+native_longitude,native_type,time_stamp)
+VALUES(0, 40.459728, -79.923447,340, 1532927048,1,40.459728,-79.923447,"wgs",1532927316568);
+
+INSERT INTO vehicle_config
+(can_accept_navigation_requests ,can_actuate_trunks , car_special_type ,car_type ,
+ charge_port_type ,eu_vehicle , exterior_color ,has_air_suspension , has_ludicrous_mode , motorized_charge_port ,
+ perf_config , plg , rear_seat_heaters, rear_seat_type , rhd, roof_color , seat_type, spoiler_type , sun_roof_installed ,
+ third_row_seats , time_stamp , trim_badging , wheel_type )
+
+ VALUES(true,true,"base","modelx","US",false,"MetallicBlack",true,false,true,"P1",true,3,3,false,"None",0,"Passive",
+ 0,"FuturisFoldFlat",1558229319160,"90d","AeroTurbine20");
+
+===============================
 
 INSERT INTO `vehicle`
 (vin,color,user_id,display_name)
@@ -127,9 +166,21 @@ INSERT INTO charge_state
 VALUES(93);
 
 INSERT INTO drive_state
-(heading, longitude, latitude)
-VALUES(270,-72.1432,34.5222);
+(power, latitude,longitude,heading,gps_as_of,native_location_supported,native_latitude,
+native_longitude,native_type,time_stamp)
+VALUES(0, 40.459728, -79.923447,340, 1532927048,1,40.459728,-79.923447,"wgs",1532927316568);
 
+
+INSERT INTO vehicle_config
+(can_accept_navigation_requests ,can_actuate_trunks , car_special_type ,car_type ,
+ charge_port_type ,eu_vehicle , exterior_color ,has_air_suspension , has_ludicrous_mode , motorized_charge_port ,
+ perf_config , plg , rear_seat_heaters, rear_seat_type , rhd, roof_color , seat_type, spoiler_type , sun_roof_installed ,
+ third_row_seats , time_stamp , trim_badging , wheel_type )
+
+ VALUES(true,true,"base","modelx","US",false,"MetallicBlack",true,false,true,"P1",true,3,3,false,"None",0,"Passive",
+ 0,"FuturisFoldFlat",1558229319160,"90d","AeroTurbine20");
+
+=========================================
 
 INSERT INTO `vehicle`
 (vin,color,user_id,display_name)
@@ -139,10 +190,11 @@ INSERT INTO charge_state
 (percent_charged)
 VALUES(64);
 
-INSERT INTO drive_state
-(heading, longitude, latitude)
-VALUES(245,-75.1432,35.3222);
 
+INSERT INTO drive_state
+(power, latitude,longitude,heading,gps_as_of,native_location_supported,native_latitude,
+native_longitude,native_type,time_stamp)
+VALUES(0, 40.459728, -79.923447,340, 1532927048,1,40.459728,-79.923447,"wgs",1532927316568);
 
 
 ****************************************8
