@@ -24,8 +24,8 @@ public class DriveState extends AbstractEntity {
     @JsonProperty("power")
     Integer power;
 
-    @Column(name="power")
-    @JsonProperty("power")
+    @Column(name="latitude")
+    @JsonProperty("latitude")
     Float latitude;
 
     @Column(name="longitude")
@@ -56,11 +56,9 @@ public class DriveState extends AbstractEntity {
     @JsonProperty("native_type")
     String nativeType;
 
-    @Column(name="timestamp")
-    @JsonProperty("timestamp")
+    @Column(name="time_stamp")
+    @JsonProperty("time_stamp")
     Double timestamp;
-
-
 
 
     @OneToOne(mappedBy="driveState") //name of the ChargeState field in the Vehicle object
