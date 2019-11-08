@@ -177,5 +177,5 @@ public class ChargeState extends AbstractEntity{
 
     @Column(name="time_stamp")
     @JsonProperty("timestamp")
-    Double timestamp;
+    Long timestamp;
 }

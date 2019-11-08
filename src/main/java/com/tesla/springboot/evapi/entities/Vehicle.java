@@ -9,7 +9,6 @@ import javax.persistence.*;
 @Data
 public class Vehicle extends AbstractEntity{
 
-
     String vin;
     String color;
 
@@ -35,4 +34,10 @@ public class Vehicle extends AbstractEntity{
     @JoinColumn(name="id")
     @JsonProperty("vehicle_config")
     private  VehicleConfig vehicleConfig;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="id")
+    @JsonProperty("climate_state")
+    private  ClimateState climateState;
+
 }

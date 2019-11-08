@@ -93,7 +93,7 @@ public class VehicleConfig extends AbstractEntity{
 
     @Column(name="time_stamp")
     @JsonProperty("time_stamp")
-    Double timestamp;
+    Long timestamp;
 
     @Column(name="trim_badging")
     @JsonProperty("trim_badging")

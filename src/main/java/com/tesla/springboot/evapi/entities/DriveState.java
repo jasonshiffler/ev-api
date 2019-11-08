@@ -38,7 +38,7 @@ public class DriveState extends AbstractEntity {
 
     @Column(name="gps_as_of")
     @JsonProperty("gps_as_of")
-    Double gpsAsOf;
+    Long gpsAsOf;
 
     @Column(name="native_location_supported")
     @JsonProperty("native_location_supported")
@@ -58,8 +58,7 @@ public class DriveState extends AbstractEntity {
 
     @Column(name="time_stamp")
     @JsonProperty("time_stamp")
-    Double timestamp;
-
+    Long timestamp;
 
     @OneToOne(mappedBy="driveState") //name of the ChargeState field in the Vehicle object
     @JoinColumn(name="id")
