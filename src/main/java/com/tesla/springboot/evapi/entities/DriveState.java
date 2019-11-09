@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Data
 public class DriveState extends AbstractEntity {
 
-
     @Column(name="shift_state")
     @JsonProperty("shift_state")
     String shiftState;

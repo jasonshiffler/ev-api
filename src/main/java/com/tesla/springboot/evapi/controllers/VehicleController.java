@@ -1,9 +1,11 @@
 package com.tesla.springboot.evapi.controllers;
 
 import com.tesla.springboot.evapi.entities.ChargeState;
+import com.tesla.springboot.evapi.entities.ClimateState;
 import com.tesla.springboot.evapi.entities.DriveState;
 import com.tesla.springboot.evapi.entities.Vehicle;
 import com.tesla.springboot.evapi.services.ChargeStateService;
+import com.tesla.springboot.evapi.services.ClimateStateService;
 import com.tesla.springboot.evapi.services.DriveStateService;
 import com.tesla.springboot.evapi.services.VehicleService;
 import com.tesla.springboot.evapi.utility.LogFormat;
@@ -20,13 +22,17 @@ public class VehicleController {
     private final VehicleService vehicleService;
     private final DriveStateService driveStateService;
     private final ChargeStateService chargeStateService;
+    private final ClimateStateService climateStateService;
 
     @Autowired
-    VehicleController(VehicleService vehicleService, DriveStateService driveStateService,
-                      ChargeStateService chargeStateService){
+    VehicleController(VehicleService vehicleService,
+                      DriveStateService driveStateService,
+                      ChargeStateService chargeStateService,
+                      ClimateStateService climateStateService) {
         this.vehicleService = vehicleService;
         this.driveStateService = driveStateService;
         this.chargeStateService = chargeStateService;
+        this.climateStateService = climateStateService;
     }
 
     @GetMapping("/vehicles")
@@ -65,4 +71,10 @@ public class VehicleController {
     public DriveState findDriveStateById(@PathVariable Long id) {
         return driveStateService.findDriveStateById(id);
     }
+
+    @GetMapping("/vehicles/{id}/data_request/climate_state")
+    public ClimateState findClimateStateById(@PathVariable Long id) {
+        return climateStateService.findClimateStateById(id);
+    }
+
 }
