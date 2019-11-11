@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 
 @RestController
 @Slf4j
@@ -35,13 +36,25 @@ public class VehicleController {
         this.climateStateService = climateStateService;
     }
 
+    /**
+     * Returns a list of all of the vehicles with all vehicle sub data.
+     *
+     * @param displayName - Allows us to search the vehicle list by display_name
+     * @param size - The number of records we want back
+     * @param page - The page of the request we want back
+     * @param request
+     * @param principal - the user id associated with the request
+     * @return - a JSON output of all the vehicles.
+     */
+
     @GetMapping("/vehicles")
     public Iterable<Vehicle> findAllVehicles(@RequestParam(value = "display_name",required = false) String displayName,
                                              @RequestParam(value = "size",required = false) Integer size,
                                              @RequestParam(value = "page",required = false) Integer page,
-                                             HttpServletRequest request){
+                                             HttpServletRequest request, Principal principal){
 
-        log.info(LogFormat.urlLogFormat(request));
+        //Log the request
+        log.info(LogFormat.urlLogFormat(request,principal.getName()));
 
         // Set a default value for the page if none was passed in.
         if (page == null)

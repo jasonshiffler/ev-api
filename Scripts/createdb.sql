@@ -13,7 +13,6 @@ create TABLE vehicle
   display_name varchar(32),
   created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
-
 );
 
 create TABLE charge_state
@@ -116,9 +115,6 @@ create TABLE vehicle_config
  FOREIGN KEY(id) REFERENCES vehicle(id) ON delete CASCADE
 );
 
-
-
-
 create TABLE climate_state
 (
  id int  NOT NULL AUTO_INCREMENT,
@@ -155,8 +151,28 @@ create TABLE climate_state
  FOREIGN KEY(id) REFERENCES vehicle(id) ON delete CASCADE
 );
 
+create table users(
+    username varchar(50) not null primary key,
+    password varchar(100) not null,
+    enabled boolean not null
+);
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+create table authorities (
+    username varchar(50) not null,
+    authority varchar(100) not null,
+    constraint fk_authorities_users foreign key(username) references users(username)
+);
+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+insert into users
+(username,password,enabled)
+values ("vshiffler","{bcrypt}$2a$10$tNUnHT4to9DF6wt.Zj6TyOdDZDCAGmAcPQjdfHLTHmu1yMFNFUIoS",true);
+
+insert into authorities
+(username,authority)
+values ("vshiffler","ROLE_USER");
+
 
 insert into `vehicle`
 (vin,color,user_id,display_name)

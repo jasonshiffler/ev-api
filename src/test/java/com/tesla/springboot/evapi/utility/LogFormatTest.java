@@ -22,10 +22,11 @@ class LogFormatTest {
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.setRemoteAddr("12.45.212.176");
         request.setRequestURI("/api/v1/vehicles");
-        assertEquals("12.45.212.176 requesting /api/v1/vehicles", LogFormat.urlLogFormat(request));
+        assertEquals("Bob at 12.45.212.176 requesting /api/v1/vehicles",
+                LogFormat.urlLogFormat(request,"Bob"));
         request.setQueryString("size=5&display_name=red");
-        assertEquals("12.45.212.176 requesting /api/v1/vehicles?size=5&display_name=red",
-                LogFormat.urlLogFormat(request));
+        assertEquals("Bob at 12.45.212.176 requesting /api/v1/vehicles?size=5&display_name=red",
+                LogFormat.urlLogFormat(request,"Bob"));
 
     }
 }

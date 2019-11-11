@@ -10,13 +10,14 @@ public class LogFormat {
      * @return
      */
 
-    public static String urlLogFormat(HttpServletRequest request){
+    public static String urlLogFormat(HttpServletRequest request, String userName){
 
         if(request.getQueryString() == null){
-            return(request.getRemoteAddr() + " requesting " + request.getRequestURI());
+            return(userName + " at " + request.getRemoteAddr() + " requesting " + request.getRequestURI());
         }
         else {
-            return (request.getRemoteAddr() + " requesting " + request.getRequestURI()+"?"+request.getQueryString());
+            return (userName + " at " + request.getRemoteAddr() + " requesting "
+                    + request.getRequestURI()+"?"+request.getQueryString());
         }
 
     }
