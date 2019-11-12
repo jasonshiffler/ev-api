@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @Service
@@ -40,11 +41,11 @@ public class VehicleServiceImpl implements VehicleService {
      */
 
     @Override
-    public Iterable<Vehicle> findAllVehicles(Integer size, Integer page) {
+    public Iterable<Vehicle> findAllVehicles(Integer size, Integer page, Principal principal) {
 
         size = adjustQuerySizeService.AdjustQuerySize(size);
         Pageable request = PageRequest.of(page, size);
-        Page<Vehicle> vehicles = vehicleRepository.findAll(request);
+        Page<Vehicle> vehicles = vehicleRepository.findByUserId(principal.getName(),request);
 
         //Throw an exception if the page doesn't contain any results
         if (vehicles.hasContent() == false)
@@ -62,7 +63,7 @@ public class VehicleServiceImpl implements VehicleService {
      */
 
     @Override
-    public Vehicle findVehicleById(Long id) {
+    public Vehicle findVehicleById(Long id, Principal principal) {
 
         Optional<Vehicle> vehicle = vehicleRepository.findById(id);
 
@@ -83,11 +84,13 @@ public class VehicleServiceImpl implements VehicleService {
      */
 
     @Override
-    public Iterable<Vehicle> findAllVehiclesByDisplayName(String displayName, Integer size, Integer page) {
+    public Iterable<Vehicle> findAllVehiclesByDisplayName(String displayName, Integer size,
+                                                          Integer page, Principal principal) {
 
         size = adjustQuerySizeService.AdjustQuerySize(size);
         Pageable request = PageRequest.of(page, size);
-        Page<Vehicle> vehicles = vehicleRepository.findByDisplayNameContaining(displayName, request);
+        Page<Vehicle> vehicles = vehicleRepository.findByDisplayNameContainingAndUserId(displayName,
+                principal.getName(),request);
 
         //Throw an exception if the page doesn't contain any results
         if (vehicles.hasContent() == false)

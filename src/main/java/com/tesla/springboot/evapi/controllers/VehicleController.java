@@ -37,7 +37,7 @@ public class VehicleController {
     }
 
     /**
-     * Returns a list of all of the vehicles with all vehicle sub data.
+     * Returns a list of all of the vehicles belonging to a particular principal with all vehicle sub data.
      *
      * @param displayName - Allows us to search the vehicle list by display_name
      * @param size - The number of records we want back
@@ -63,9 +63,9 @@ public class VehicleController {
         //Adjust the search based on if the display name was set or not
 
         if (displayName == null) {
-            return vehicleService.findAllVehicles(size, page);
+            return vehicleService.findAllVehicles(size, page,principal);
         } else
-            return vehicleService.findAllVehiclesByDisplayName(displayName,size,page);
+            return vehicleService.findAllVehiclesByDisplayName(displayName,size,page,principal);
     }
 
 

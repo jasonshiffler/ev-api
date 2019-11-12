@@ -11,5 +11,6 @@ import java.util.Optional;
 
 public interface VehicleRepository extends PagingAndSortingRepository<Vehicle, Long> {
 
-    Page<Vehicle> findByDisplayNameContaining(String displayName, Pageable pageable);
+    Page<Vehicle> findByDisplayNameContainingAndUserId(String displayName, String userId, Pageable pageable);
+    Page<Vehicle> findByUserId(String userId, Pageable pageable);
 }

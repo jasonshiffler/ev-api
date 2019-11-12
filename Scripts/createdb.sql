@@ -167,6 +167,15 @@ create table authorities (
 
 insert into users
 (username,password,enabled)
+values ("jshiffler","{bcrypt}$2a$10$tNUnHT4to9DF6wt.Zj6TyOdDZDCAGmAcPQjdfHLTHmu1yMFNFUIoS",true);
+
+insert into authorities
+(username,authority)
+values ("jshiffler","ROLE_USER");
+
+
+insert into users
+(username,password,enabled)
 values ("vshiffler","{bcrypt}$2a$10$tNUnHT4to9DF6wt.Zj6TyOdDZDCAGmAcPQjdfHLTHmu1yMFNFUIoS",true);
 
 insert into authorities
