@@ -39,9 +39,12 @@ class VehicleControllerTest {
         verify(service).findAllVehicles();
     }
 */
-    @Test
+   /* @Test
     void findVehicleByIdTest() {
         controller.findVehicleById(5L);
         verify(service).findVehicleById(5L);
     }
+
+
+    */
 }

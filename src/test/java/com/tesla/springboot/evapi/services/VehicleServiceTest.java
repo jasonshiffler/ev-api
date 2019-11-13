@@ -27,9 +27,13 @@ class VehicleServiceTest {
     }
 
  */
+
+/*
     @Test
     void findVehicleByIdTest() {
         service.findVehicleById(5L);
         verify(repository).findById(5L);
     }
+
+ */
 }

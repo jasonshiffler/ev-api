@@ -68,26 +68,24 @@ public class VehicleController {
             return vehicleService.findAllVehiclesByDisplayName(displayName,size,page,principal);
     }
 
-
     @GetMapping("/vehicles/{id}")
-    public Vehicle findVehicleById(@PathVariable Long id) {
-       return vehicleService.findVehicleById(id);
+    public Vehicle findVehicleById(@PathVariable Long id, Principal principal) {
+       return vehicleService.findVehicleById(id,principal);
      }
 
-
     @GetMapping("/vehicles/{id}/data_request/charge_state")
-    public ChargeState findChargeStateById(@PathVariable Long id) {
-        return chargeStateService.findChargeStateById(id);
+    public ChargeState findChargeStateById(@PathVariable Long id, Principal principal) {
+        return chargeStateService.findChargeStateById(id, principal);
     }
 
     @GetMapping("/vehicles/{id}/data_request/drive_state")
-    public DriveState findDriveStateById(@PathVariable Long id) {
-        return driveStateService.findDriveStateById(id);
+    public DriveState findDriveStateById(@PathVariable Long id, Principal principal) {
+        return driveStateService.findDriveStateById(id, principal);
     }
 
     @GetMapping("/vehicles/{id}/data_request/climate_state")
-    public ClimateState findClimateStateById(@PathVariable Long id) {
-        return climateStateService.findClimateStateById(id);
+    public ClimateState findClimateStateById(@PathVariable Long id, Principal principal) {
+        return climateStateService.findClimateStateById(id, principal);
     }
 
 }

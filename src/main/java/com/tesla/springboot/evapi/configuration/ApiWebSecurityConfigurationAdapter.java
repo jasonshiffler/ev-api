@@ -40,9 +40,7 @@ public class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAda
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception{
-
         auth.jdbcAuthentication().dataSource(dataSource);
-
     }
 
     @Bean

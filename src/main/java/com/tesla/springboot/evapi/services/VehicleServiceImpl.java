@@ -25,7 +25,6 @@ public class VehicleServiceImpl implements VehicleService {
      * @param adjustQuerySizeService
      */
 
-
     @Autowired
     VehicleServiceImpl(VehicleRepository vehicleRepository, AdjustQuerySizeService adjustQuerySizeService){
         this.vehicleRepository = vehicleRepository;
@@ -65,7 +64,7 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public Vehicle findVehicleById(Long id, Principal principal) {
 
-        Optional<Vehicle> vehicle = vehicleRepository.findById(id);
+        Optional<Vehicle> vehicle = vehicleRepository.findByIdAndUserId(id,principal.getName());
 
         if (vehicle.isPresent()){
             return vehicle.get();

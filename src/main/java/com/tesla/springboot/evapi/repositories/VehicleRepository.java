@@ -8,9 +8,11 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 public interface VehicleRepository extends PagingAndSortingRepository<Vehicle, Long> {
 
     Page<Vehicle> findByDisplayNameContainingAndUserId(String displayName, String userId, Pageable pageable);
     Page<Vehicle> findByUserId(String userId, Pageable pageable);
+    Optional<Vehicle> findByIdAndUserId(Long id, String userId);
 }
