@@ -17,7 +17,7 @@ import java.security.Principal;
 
 @RestController
 @Slf4j
-@Secured("ROLE_USER")
+@Secured("ROLE_USER") //We only want authenticated users to be able to access the controller
 public class VehicleController {
 
     private final VehicleService vehicleService;

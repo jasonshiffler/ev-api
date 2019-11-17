@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 
 @RestController
-@Secured("ROLE_USER")
+@Secured("ROLE_USER") //We only want authenticated users to be able to access the controller
 public class ClimateStateController {
 
     private final ClimateStateService climateStateService;

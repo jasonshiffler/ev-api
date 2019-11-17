@@ -7,12 +7,25 @@ use ev;
 create TABLE vehicle
 (
   id int  NOT NULL AUTO_INCREMENT,
-  vin varchar(17),
-  color varchar (32),
   user_id varchar (32),
+  vehicle_id bigint,
+  vin varchar(17),
   display_name varchar(32),
+  option_codes varchar(256),
+  color varchar(32),
   created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
+);
+
+create TABLE token
+(
+  id int  NOT NULL AUTO_INCREMENT,
+  token_name varchar (32),
+  vehicle_id int,
+  created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  FOREIGN KEY(vehicle_id) REFERENCES vehicle(id) ON delete CASCADE
+
 );
 
 create TABLE charge_state
@@ -184,9 +197,17 @@ values ("vshiffler","ROLE_USER");
 
 
 insert into `vehicle`
-(vin,color,user_id,display_name)
+(vin,color,user_id,display_name,option_codes,vehicle_id)
+VALUES(1111111111111,"black","jshiffler","black car", "AD15,AF02,AH00",120323439);
 
-VALUES(1111111111111,"black","jshiffler","black car");
+
+insert into `token`
+(token_name, vehicle_id)
+VALUES("token1", 1);
+
+insert into `token`
+(token_name, vehicle_id)
+VALUES("token2", 1);
 
 insert into drive_state
 (power, latitude,longitude,heading,gps_as_of,native_location_supported,native_latitude,
