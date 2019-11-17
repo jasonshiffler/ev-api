@@ -10,5 +10,7 @@ import java.security.Principal;
 public interface ClimateStateService {
 
     ClimateState findClimateStateById(Long id , Principal principal);
+    void changeClimateState(Long id, Principal principal, Boolean on);
+    void setTempById(Long id, Principal principal, Float driverTemp, Float passengerTemp);
 
 }

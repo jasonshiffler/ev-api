@@ -1,3 +1,8 @@
+/**
+ * This service layer class handles anything to do with querying or updating vehicle data
+ *
+ */
+
 package com.tesla.springboot.evapi.services;
 
 import com.tesla.springboot.evapi.entities.Vehicle;
@@ -32,11 +37,12 @@ public class VehicleServiceImpl implements VehicleService {
     }
 
     /**
-     * Return all vehicles while allowing the search results to be paged and sized.
+     * Return all vehicles associated with a user while allowing the search results to be paged and sized.
      *
      * @param size
      * @param page
-     * @return
+     * @param principal The user associated with the request
+     * @return An Iterable of all the vehicles
      */
 
     @Override
@@ -57,8 +63,9 @@ public class VehicleServiceImpl implements VehicleService {
     /**
      * Find the vehicle with the matching id
      *
-     * @param id
-     * @return - the V
+     * @param id - The id of the record being requested
+     * @param principal - The user associated with the request
+     * @return - the Vehicle object
      */
 
     @Override

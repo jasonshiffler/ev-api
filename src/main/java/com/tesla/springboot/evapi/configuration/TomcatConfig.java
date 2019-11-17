@@ -1,8 +1,7 @@
 /**
- * The purpose of this configuration class is to redirect non-secure http requests to use https instead.
- *
- */
-
+ * The purpose of this configuration class is to make the API more user friendly by redirecting non-secure http
+ * requests to use secured https instead.
+ **/
 
 package com.tesla.springboot.evapi.configuration;
 
@@ -50,8 +49,6 @@ public class TomcatConfig {
             connector.setPort(8080);
             connector.setRedirectPort(8443);
             return connector;
-
-
         }
     }
 }
