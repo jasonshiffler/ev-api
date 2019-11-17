@@ -14,7 +14,6 @@ import com.tesla.springboot.evapi.repositories.ClimateStateRepository;
 import com.tesla.springboot.evapi.repositories.VehicleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
@@ -99,8 +98,6 @@ public class ClimateStateServiceImpl implements ClimateStateService {
         else{
             throw new ItemNotFoundException(id, "climate state");
         }
-
-
     }
 
     /**
@@ -145,11 +142,11 @@ public class ClimateStateServiceImpl implements ClimateStateService {
                 this.climateStateRepository.save(climate); //Save the record in the database
             }
             else {
-                throw new ItemNotFoundException(id, "climate state"); // Throw an exception if we couldn't find the
+                throw new ItemNotFoundException(id, "climate state"); // If the vehicle doesn't have a climate state
             }                                                         // record
         }
         else{
-            throw new ItemNotFoundException(id, "climate state");
+            throw new ItemNotFoundException(id, "climate state"); //If no results came back from the vehicle repository
         }
 
     } // close method

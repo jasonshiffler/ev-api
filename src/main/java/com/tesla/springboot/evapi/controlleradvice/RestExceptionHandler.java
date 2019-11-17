@@ -33,5 +33,11 @@ public class RestExceptionHandler {
         ApiError err = new ApiError(HttpStatus.BAD_REQUEST,e);
         return new ResponseEntity<Object>(err,err.getStatus());
     }
-
+/*
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<Object> handleNullPointerException(NullPointerException e){
+        ApiError err = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR,"An internal error has occurred");
+        return new ResponseEntity<Object>(err,err.getStatus());
+    }
+*/
 }

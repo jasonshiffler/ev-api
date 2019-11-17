@@ -5,6 +5,7 @@
 
 package com.tesla.springboot.evapi.services;
 
+import com.tesla.springboot.evapi.controllers.CommandResponse;
 import com.tesla.springboot.evapi.entities.Vehicle;
 import com.tesla.springboot.evapi.exceptions.ItemNotFoundException;
 import com.tesla.springboot.evapi.repositories.VehicleRepository;
@@ -25,9 +26,9 @@ public class VehicleServiceImpl implements VehicleService {
     private final AdjustQuerySizeService adjustQuerySizeService;
 
     /**
-     *
-     * @param vehicleRepository
-     * @param adjustQuerySizeService
+     * Constructor, used so we can inject our dependencies
+     * @param vehicleRepository - The repository used to access our vehicle data
+     * @param adjustQuerySizeService - A service that is used to adjust the query size based on configuration parameters
      */
 
     @Autowired
@@ -39,8 +40,8 @@ public class VehicleServiceImpl implements VehicleService {
     /**
      * Return all vehicles associated with a user while allowing the search results to be paged and sized.
      *
-     * @param size
-     * @param page
+     * @param size - The number of records we want to get back
+     * @param page - The page of the results we'd like to get back.
      * @param principal The user associated with the request
      * @return An Iterable of all the vehicles
      */
@@ -106,4 +107,48 @@ public class VehicleServiceImpl implements VehicleService {
         return vehicles.getContent();
 
     }
+
+    /**
+     * Flash the lights on the car. There is no backend database record to update for this action.
+     * @param id - The id of the vehicle we want to flash the lights of.
+     * @param principal - The user associated with the request.
+     * @return - Our standard command response object.
+     */
+
+    @Override
+    public CommandResponse flashVehicleLightsById(Long id, Principal principal) {
+
+        Optional<Vehicle> vehicle = vehicleRepository.findByIdAndUserId(id,principal.getName());
+
+        if (vehicle.isPresent()){
+            return new CommandResponse();
+        } else {
+            throw new ItemNotFoundException(id,"vehicle");
+        }
+    }
+
+    /**
+     * Honk the horn of a particular vehicle. There is no backend database record to update for this action.
+     * The method body is identical to the flashVehicleLightsById method. If this method actually honked the horn
+     * of a real car it would make a different call so the methods have been split out.
+     * @param id - The id of the vehicle we want to honk the horn of.
+     * @param principal - The user associated with the request.
+     * @return - Our standard command response object.
+     */
+
+    @Override
+    public CommandResponse honkVehicleHornById(Long id, Principal principal) {
+
+        Optional<Vehicle> vehicle = vehicleRepository.findByIdAndUserId(id,principal.getName());
+
+        if (vehicle.isPresent()){
+            return new CommandResponse();
+        } else {
+            throw new ItemNotFoundException(id,"vehicle");
+        }
+    }
+
+
+
+
 }

@@ -11,11 +11,13 @@ import com.tesla.springboot.evapi.exceptions.ItemNotFoundException;
 import com.tesla.springboot.evapi.exceptions.TemperatureOutOfBoundsException;
 import com.tesla.springboot.evapi.services.ClimateStateService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
 @RestController
+@Secured("ROLE_USER")
 public class ClimateStateController {
 
     private final ClimateStateService climateStateService;
@@ -43,11 +45,11 @@ public class ClimateStateController {
      * @return
      */
     @GetMapping("/vehicles/{id}/command/auto_conditioning_start")
-    public ControllerResponse startClimateHVACById(@PathVariable Long id, Principal principal) {
+    public CommandResponse startClimateHVACById(@PathVariable Long id, Principal principal) {
 
         try {
             climateStateService.changeClimateState(id, principal, true);
-            return new ControllerResponse();
+            return new CommandResponse();
         } catch (ItemNotFoundException e){
             throw new ItemNotFoundException(id, "climate state");
         }
@@ -60,10 +62,10 @@ public class ClimateStateController {
      * @return
      */
     @GetMapping("/vehicles/{id}/command/auto_conditioning_stop")
-    public ControllerResponse stopClimateHVACById(@PathVariable Long id, Principal principal) {
+    public CommandResponse stopClimateHVACById(@PathVariable Long id, Principal principal) {
         try {
             climateStateService.changeClimateState(id, principal, false);
-            return new ControllerResponse();
+            return new CommandResponse();
         }
         catch (ItemNotFoundException e){
             throw new ItemNotFoundException(id, "climate state");
@@ -83,13 +85,13 @@ public class ClimateStateController {
      * @return
      */
     @GetMapping("/vehicles/{id}/command/set_temps")
-    public ControllerResponse setTempById(@PathVariable Long id, Principal principal,
-                                          @RequestParam (value = "driver_temp", required = false) Float driverTemp,
-                                          @RequestParam (value = "passenger_temp",required = false) Float passengerTemp) {
+    public CommandResponse setTempById(@PathVariable Long id, Principal principal,
+                                       @RequestParam (value = "driver_temp", required = false) Float driverTemp,
+                                       @RequestParam (value = "passenger_temp",required = false) Float passengerTemp) {
 
         try {
             climateStateService.setTempById(id, principal, driverTemp, passengerTemp);
-            return new ControllerResponse();
+            return new CommandResponse();
         }
         catch(DataExpectedException e){
             throw new DataExpectedException();
