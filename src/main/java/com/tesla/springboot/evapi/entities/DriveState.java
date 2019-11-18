@@ -2,6 +2,8 @@ package com.tesla.springboot.evapi.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.tesla.springboot.evapi.views.VehicleView;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -9,6 +11,7 @@ import javax.persistence.*;
 @Entity
 @Table(name="drive_state")
 @Data
+@JsonView(VehicleView.detail.class)
 public class DriveState extends AbstractEntity {
 
     @Column(name="shift_state")

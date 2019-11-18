@@ -2,12 +2,15 @@ package com.tesla.springboot.evapi.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonView;
+import com.tesla.springboot.evapi.views.VehicleView;
 import lombok.Data;
 import javax.persistence.*;
 
 @Entity
 @Table(name="charge_state")
 @Data
+@JsonView(VehicleView.detail.class)
 public class ChargeState extends AbstractEntity{
 
     @OneToOne(mappedBy="chargeState") //name of the ChargeState field in the Vehicle object

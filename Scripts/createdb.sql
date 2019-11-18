@@ -13,6 +13,12 @@ create TABLE vehicle
   display_name varchar(32),
   option_codes varchar(256),
   color varchar(32),
+  state varchar(32),
+  in_service boolean,
+  id_s varchar(32),
+  calendar_enabled boolean,
+  backseat_token varchar(32),
+  backseat_token_updated_at TIMESTAMP,
   created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id)
 );
@@ -197,8 +203,8 @@ values ("vshiffler","ROLE_USER");
 
 
 insert into `vehicle`
-(vin,color,user_id,display_name,option_codes,vehicle_id)
-VALUES(1111111111111,"black","jshiffler","black car", "AD15,AF02,AH00",120323439);
+(vin,color,user_id,display_name,option_codes,vehicle_id,state,in_service,id_s,calendar_enabled,backseat_token,backseat_token_updated_at)
+VALUES(1111111111111,"black","jshiffler","black car", "AD15,AF02,AH00",120323439,"online",null,"ids",true,null,null);
 
 
 insert into `token`

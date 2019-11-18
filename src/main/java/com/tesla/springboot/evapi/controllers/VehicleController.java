@@ -1,5 +1,6 @@
 package com.tesla.springboot.evapi.controllers;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import com.tesla.springboot.evapi.entities.ChargeState;
 import com.tesla.springboot.evapi.entities.DriveState;
 import com.tesla.springboot.evapi.entities.Vehicle;
@@ -7,6 +8,7 @@ import com.tesla.springboot.evapi.services.ChargeStateService;
 import com.tesla.springboot.evapi.services.DriveStateService;
 import com.tesla.springboot.evapi.services.VehicleService;
 import com.tesla.springboot.evapi.utility.LogFormat;
+import com.tesla.springboot.evapi.views.VehicleView;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
@@ -35,7 +37,7 @@ public class VehicleController {
     }
 
     /**
-     * Returns a list of all of the vehicles belonging to a particular principal with all vehicle sub data.
+     * Returns a list of all of the vehicles belonging to a particular principal in a summary format
      *
      * @param displayName - Allows us to search the vehicle list by display_name.
      * @param size - The number of records we want back.
@@ -45,6 +47,7 @@ public class VehicleController {
      * @return - a JSON output of all the vehicles.
      */
 
+    @JsonView(VehicleView.summary.class)
     @GetMapping("/vehicles")
     public Iterable<Vehicle> findAllVehicles(@RequestParam(value = "display_name",required = false) String displayName,
                                              @RequestParam(value = "size",required = false) Integer size,
@@ -66,10 +69,26 @@ public class VehicleController {
             return vehicleService.findAllVehiclesByDisplayName(displayName,size,page,principal);
     }
 
+    /**
+     * Returns the summary of a vehicle with a particular id
+     * @param id - The id of the vehicle we want the data for.
+     * @param principal the user id associated with the request.
+     * @return JSON output of a vehicle summary
+     */
+    @JsonView(VehicleView.summary.class)
     @GetMapping("/vehicles/{id}")
     public Vehicle findVehicleById(@PathVariable Long id, Principal principal) {
        return vehicleService.findVehicleById(id,principal);
      }
+
+    @JsonView(VehicleView.detail.class)
+    @GetMapping("/vehicles/{id}/vehicle_data")
+    public Vehicle findVehicleDataById(@PathVariable Long id, Principal principal) {
+        return vehicleService.findVehicleById(id,principal);
+    }
+
+
+
 
     /**
      * Allows the user to flash the lights on a particular vehicle.
