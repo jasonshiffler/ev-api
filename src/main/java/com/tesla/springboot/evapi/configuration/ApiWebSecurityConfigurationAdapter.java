@@ -1,3 +1,9 @@
+/**
+ * This class contains the Spring Security configuration for the application
+ *
+ * */
+
+
 package com.tesla.springboot.evapi.configuration;
 
 import lombok.extern.slf4j.Slf4j;

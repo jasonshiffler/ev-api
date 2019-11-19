@@ -95,6 +95,12 @@ public class Vehicle extends AbstractEntity{
     @JsonProperty("climate_state")
     private  ClimateState climateState;
 
+    @JsonView(VehicleView.detail.class)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="id")
+    @JsonProperty("gui_settings")
+    private  GuiSettings guiSettings;
+
     @JsonView(VehicleView.summary.class)
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,orphanRemoval = true)
     @JoinColumn(name="vehicle_id")

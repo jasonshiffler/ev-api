@@ -1,5 +1,5 @@
-/*
- * This class allows the exceptions to be handled so the print a cleanly formatted JSON message back to the client
+/**
+ * This class allows the exceptions to be handled so they print a cleanly formatted JSON message back to the client
  * and not a stack trace.
  */
 
@@ -33,11 +33,11 @@ public class RestExceptionHandler {
         ApiError err = new ApiError(HttpStatus.BAD_REQUEST,e);
         return new ResponseEntity<Object>(err,err.getStatus());
     }
-/*
+
     @ExceptionHandler(NullPointerException.class)
     public ResponseEntity<Object> handleNullPointerException(NullPointerException e){
         ApiError err = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR,"An internal error has occurred");
         return new ResponseEntity<Object>(err,err.getStatus());
     }
-*/
+
 }

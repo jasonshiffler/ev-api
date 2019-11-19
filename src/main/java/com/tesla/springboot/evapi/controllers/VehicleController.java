@@ -1,11 +1,18 @@
+/**
+ * This controller handles API requests at the vehicle level.
+ *
+ */
+
 package com.tesla.springboot.evapi.controllers;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.tesla.springboot.evapi.entities.ChargeState;
 import com.tesla.springboot.evapi.entities.DriveState;
+import com.tesla.springboot.evapi.entities.GuiSettings;
 import com.tesla.springboot.evapi.entities.Vehicle;
 import com.tesla.springboot.evapi.services.ChargeStateService;
 import com.tesla.springboot.evapi.services.DriveStateService;
+import com.tesla.springboot.evapi.services.GuiSettingsService;
 import com.tesla.springboot.evapi.services.VehicleService;
 import com.tesla.springboot.evapi.utility.LogFormat;
 import com.tesla.springboot.evapi.views.VehicleView;
@@ -25,15 +32,17 @@ public class VehicleController {
     private final VehicleService vehicleService;
     private final DriveStateService driveStateService;
     private final ChargeStateService chargeStateService;
+    private final GuiSettingsService guiSettingsService;
 
     @Autowired
     VehicleController(VehicleService vehicleService,
                       DriveStateService driveStateService,
-                      ChargeStateService chargeStateService
-                      ) {
+                      ChargeStateService chargeStateService,
+                      GuiSettingsService guiSettingsService) {
         this.vehicleService = vehicleService;
         this.driveStateService = driveStateService;
         this.chargeStateService = chargeStateService;
+        this.guiSettingsService = guiSettingsService;
     }
 
     /**
@@ -44,9 +53,9 @@ public class VehicleController {
      * @param page - The page of the request we want back.
      * @param request
      * @param principal - the user id associated with the request.
-     * @return - a JSON output of all the vehicles.
+     * @return - An Iterable of all vehicles associated with the user the @JsonView annotation will make sure only
+     *           a summary view is displayed.
      */
-
     @JsonView(VehicleView.summary.class)
     @GetMapping("/vehicles")
     public Iterable<Vehicle> findAllVehicles(@RequestParam(value = "display_name",required = false) String displayName,
@@ -73,7 +82,7 @@ public class VehicleController {
      * Returns the summary of a vehicle with a particular id
      * @param id - The id of the vehicle we want the data for.
      * @param principal the user id associated with the request.
-     * @return JSON output of a vehicle summary
+     * @return A Vehicle object, the JsonView annotation will make sure that only a summary is displayed
      */
     @JsonView(VehicleView.summary.class)
     @GetMapping("/vehicles/{id}")
@@ -81,14 +90,18 @@ public class VehicleController {
        return vehicleService.findVehicleById(id,principal);
      }
 
+    /**
+     * Returns a detailed view of the information associated with a particular vehicle
+     * @param id - The id of the vehicle we want the data for.
+     * @param principal - the user id associated with the request.
+     * @return A Vehicle object, the JsonView annotation will make sure that all detail is displayed
+     */
+
     @JsonView(VehicleView.detail.class)
     @GetMapping("/vehicles/{id}/vehicle_data")
     public Vehicle findVehicleDataById(@PathVariable Long id, Principal principal) {
         return vehicleService.findVehicleById(id,principal);
     }
-
-
-
 
     /**
      * Allows the user to flash the lights on a particular vehicle.
@@ -96,7 +109,6 @@ public class VehicleController {
      * @param principal - The user making the request.
      * @return Returns a command response object.
      */
-
 
     @GetMapping("/vehicles/{id}/command/flash_lights")
     public CommandResponse flashVehicleLightsById(@PathVariable Long id, Principal principal) {
@@ -109,7 +121,6 @@ public class VehicleController {
      * @param principal - The user making the request.
      * @return Returns a command response object.
      */
-
 
     @GetMapping("/vehicles/{id}/command/honk_horn")
     public CommandResponse honkVehicleHornById(@PathVariable Long id, Principal principal) {
@@ -127,6 +138,10 @@ public class VehicleController {
         return driveStateService.findDriveStateById(id, principal);
     }
 
+    @GetMapping("/vehicles/{id}/data_request/gui_settings")
+    public GuiSettings findGUISettingsById(@PathVariable Long id, Principal principal) {
+        return guiSettingsService.findGUISettingsById(id, principal);
+    }
 
 
 }

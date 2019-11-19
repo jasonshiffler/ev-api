@@ -170,6 +170,20 @@ create TABLE climate_state
  FOREIGN KEY(id) REFERENCES vehicle(id) ON delete CASCADE
 );
 
+create table gui_settings(
+  id int  NOT NULL AUTO_INCREMENT,
+  gui_distance_units varchar(8),
+  gui_temperature_units varchar(8),
+  gui_charge_rate_units varchar(8),
+  gui_24_hour_time boolean,
+  gui_range_display varchar(32),
+  time_stamp bigint,
+  created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  FOREIGN KEY(id) REFERENCES vehicle(id) ON delete CASCADE
+);
+
+
 create table users(
     username varchar(50) not null primary key,
     password varchar(100) not null,
@@ -181,6 +195,9 @@ create table authorities (
     authority varchar(100) not null,
     constraint fk_authorities_users foreign key(username) references users(username)
 );
+
+
+
 
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -255,6 +272,9 @@ insert into climate_state(inside_temp, outside_temp, driver_temp_setting , passe
 
 values( null,null, 18.3,18.3, null, null, false, false, 0, false, 15.0, 28.0, false, false, false,false, false, 0,0,
       false, null, false,false,false, false,false, null,1532926836621);
+
+insert into gui_settings(gui_24_hour_time,gui_charge_rate_units,gui_distance_units,gui_range_display,gui_temperature_units,time_stamp)
+values(false,"mi/hr","mi/hr","Rated","F",1558229319160)
 
 ===============================
 
