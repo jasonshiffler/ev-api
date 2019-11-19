@@ -183,6 +183,40 @@ create table gui_settings(
   FOREIGN KEY(id) REFERENCES vehicle(id) ON delete CASCADE
 );
 
+create table vehicle_state(
+  id int  NOT NULL AUTO_INCREMENT,
+  api_version int,
+  autopark_state_v2 varchar(32),
+  autopark_style varchar(32),
+  calendar_supported boolean,
+  car_version varchar(32),
+  center_display_state int,
+  df int,
+  dr int,
+  ft int,
+  homelink_nearby boolean,
+  is_user_present boolean,
+  last_autopark_error varchar(32),
+  locked boolean,
+  notifications_supported boolean,
+  odometer float,
+  parsed_calendar_supported boolean,
+  pf int,
+  pr int,
+  remote_start boolean,
+  remote_start_enabled boolean,
+  remote_start_supported boolean,
+  rt int,
+  sentry_mode boolean,
+  sun_roof_percent_open int,
+  sun_roof_state varchar(32),
+  time_stamp bigint,
+  valet_mode boolean,
+  vehicle_name varchar(64),
+  PRIMARY KEY (id),
+  FOREIGN KEY(id) REFERENCES vehicle(id) ON delete CASCADE
+);
+
 
 create table users(
     username varchar(50) not null primary key,
@@ -275,6 +309,14 @@ values( null,null, 18.3,18.3, null, null, false, false, 0, false, 15.0, 28.0, fa
 
 insert into gui_settings(gui_24_hour_time,gui_charge_rate_units,gui_distance_units,gui_range_display,gui_temperature_units,time_stamp)
 values(false,"mi/hr","mi/hr","Rated","F",1558229319160)
+
+
+insert into vehicle_state(api_version, autopark_state_v2, autopark_style, calendar_supported, car_version ,
+  center_display_state, df, dr , ft , homelink_nearby, is_user_present, last_autopark_error , locked ,
+   notifications_supported, odometer, parsed_calendar_supported, pf, pr, remote_start, remote_start_enabled,
+  remote_start_supported, rt, sentry_mode, sun_roof_percent_open, sun_roof_state, time_stamp, valet_mode,
+  vehicle_name)
+
 
 ===============================
 
