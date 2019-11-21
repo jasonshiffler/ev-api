@@ -1,7 +1,6 @@
 package com.tesla.springboot.evapi.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.tesla.springboot.evapi.views.VehicleView;
 import lombok.Data;
@@ -100,6 +99,12 @@ public class Vehicle extends AbstractEntity{
     @JoinColumn(name="id")
     @JsonProperty("gui_settings")
     private  GuiSettings guiSettings;
+
+    @JsonView(VehicleView.detail.class)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="id")
+    @JsonProperty("vehicle_state")
+    private  VehicleState vehicleState;
 
     @JsonView(VehicleView.summary.class)
     @OneToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL,orphanRemoval = true)

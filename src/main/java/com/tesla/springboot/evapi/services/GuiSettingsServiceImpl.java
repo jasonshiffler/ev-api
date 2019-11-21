@@ -6,10 +6,12 @@ import com.tesla.springboot.evapi.exceptions.ItemNotFoundException;
 import com.tesla.springboot.evapi.repositories.GuiSettingsRepository;
 import com.tesla.springboot.evapi.repositories.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.Optional;
 
+@Service
 public class GuiSettingsServiceImpl implements GuiSettingsService {
 
     private final GuiSettingsRepository guiSettingsRepository;

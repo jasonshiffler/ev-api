@@ -213,6 +213,7 @@ create table vehicle_state(
   time_stamp bigint,
   valet_mode boolean,
   vehicle_name varchar(64),
+  created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (id),
   FOREIGN KEY(id) REFERENCES vehicle(id) ON delete CASCADE
 );
@@ -233,7 +234,6 @@ create table authorities (
 
 
 
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 insert into users
 (username,password,enabled)
@@ -308,14 +308,16 @@ values( null,null, 18.3,18.3, null, null, false, false, 0, false, 15.0, 28.0, fa
       false, null, false,false,false, false,false, null,1532926836621);
 
 insert into gui_settings(gui_24_hour_time,gui_charge_rate_units,gui_distance_units,gui_range_display,gui_temperature_units,time_stamp)
-values(false,"mi/hr","mi/hr","Rated","F",1558229319160)
+values(false,"mi/hr","mi/hr","Rated","F",1558229319160);
 
 
-insert into vehicle_state(api_version, autopark_state_v2, autopark_style, calendar_supported, car_version ,
+insert into vehicle_state(api_version, autopark_state_v2, autopark_style, calendar_supported, car_version,
   center_display_state, df, dr , ft , homelink_nearby, is_user_present, last_autopark_error , locked ,
    notifications_supported, odometer, parsed_calendar_supported, pf, pr, remote_start, remote_start_enabled,
   remote_start_supported, rt, sentry_mode, sun_roof_percent_open, sun_roof_state, time_stamp, valet_mode,
   vehicle_name)
+
+values(6,"ready","dead_man",true,"2019.12.1.1",0,0,0,0,false,false,"no_error",true,true,20101.09,true,0,0,false,true,true,0,false,null,"unknown",1558229319158,false,"name");
 
 
 ===============================
