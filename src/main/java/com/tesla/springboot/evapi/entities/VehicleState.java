@@ -25,6 +25,7 @@ public class VehicleState extends AbstractEntity {
     @JsonIgnore
     protected Long id;
 
+
     @Column(name="api_version")
     @JsonProperty("api_version")
     Integer apiVersion;
@@ -118,6 +119,11 @@ public class VehicleState extends AbstractEntity {
     @Column(name="sentry_mode")
     @JsonProperty("sentry_mode")
     Boolean sentryMode;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="id")
+    @JsonProperty("speed_limit_mode")
+    private SpeedLimitMode speedLimitMode;
 
     @Column(name="sun_roof_percent_open")
     @JsonProperty("sun_roof_percent_open")

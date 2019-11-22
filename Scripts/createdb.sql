@@ -218,6 +218,17 @@ create table vehicle_state(
   FOREIGN KEY(id) REFERENCES vehicle(id) ON delete CASCADE
 );
 
+create table speed_limit_mode(
+id int  NOT NULL AUTO_INCREMENT,
+active boolean,
+current_limit_mph float,
+max_limit_mph float,
+min_limit_mph float,
+pin_code_set boolean,
+created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  FOREIGN KEY(id) REFERENCES vehicle_state(id) ON delete CASCADE
+);
 
 create table users(
     username varchar(50) not null primary key,
@@ -319,6 +330,8 @@ insert into vehicle_state(api_version, autopark_state_v2, autopark_style, calend
 
 values(6,"ready","dead_man",true,"2019.12.1.1",0,0,0,0,false,false,"no_error",true,true,20101.09,true,0,0,false,true,true,0,false,null,"unknown",1558229319158,false,"name");
 
+insert into speed_limit_mode(active,current_limit_mph,max_limit_mph,min_limit_mph,pin_code_set)
+values (true, 85.0, 55, 90, false)
 
 ===============================
 
