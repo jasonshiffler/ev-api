@@ -87,8 +87,11 @@ public class VehicleController {
      */
     @JsonView(VehicleView.summary.class)
     @GetMapping("/vehicles/{id}")
-    public Vehicle findVehicleById(@PathVariable Long id, Principal principal) throws ItemNotFoundException {
-       return vehicleService.findVehicleById(id,principal);
+    public Vehicle findVehicleById(@PathVariable Long id, Principal principal,
+                                   HttpServletRequest request) throws ItemNotFoundException {
+
+        log.info(LogFormat.urlLogFormat(request,principal.getName()));
+        return vehicleService.findVehicleById(id,principal);
      }
 
     /**
@@ -100,7 +103,9 @@ public class VehicleController {
 
     @JsonView(VehicleView.detail.class)
     @GetMapping("/vehicles/{id}/vehicle_data")
-    public Vehicle findVehicleDataById(@PathVariable Long id, Principal principal) throws ItemNotFoundException {
+    public Vehicle findVehicleDataById(@PathVariable Long id, Principal principal,
+                                       HttpServletRequest request)throws ItemNotFoundException {
+        log.info(LogFormat.urlLogFormat(request,principal.getName()));
         return vehicleService.findVehicleById(id,principal);
     }
 
@@ -112,7 +117,9 @@ public class VehicleController {
      */
 
     @GetMapping("/vehicles/{id}/command/flash_lights")
-    public CommandResponse flashVehicleLightsById(@PathVariable Long id, Principal principal) throws ItemNotFoundException {
+    public CommandResponse flashVehicleLightsById(@PathVariable Long id, Principal principal,
+                                                  HttpServletRequest request) throws ItemNotFoundException {
+        log.info(LogFormat.urlLogFormat(request,principal.getName()));
         return vehicleService.flashVehicleLightsById(id,principal);
     }
 
@@ -124,23 +131,35 @@ public class VehicleController {
      */
 
     @GetMapping("/vehicles/{id}/command/honk_horn")
-    public CommandResponse honkVehicleHornById(@PathVariable Long id, Principal principal) throws ItemNotFoundException {
+    public CommandResponse honkVehicleHornById(@PathVariable Long id, Principal principal,
+                                               HttpServletRequest request) throws ItemNotFoundException {
+
+        log.info(LogFormat.urlLogFormat(request,principal.getName()));
         return vehicleService.honkVehicleHornById(id,principal);
     }
 
 
     @GetMapping("/vehicles/{id}/data_request/charge_state")
-    public ChargeState findChargeStateById(@PathVariable Long id, Principal principal) throws ItemNotFoundException {
+    public ChargeState findChargeStateById(@PathVariable Long id, Principal principal,
+                                           HttpServletRequest request) throws ItemNotFoundException {
+
+        log.info(LogFormat.urlLogFormat(request,principal.getName()));
         return chargeStateService.findChargeStateById(id, principal);
     }
 
     @GetMapping("/vehicles/{id}/data_request/drive_state")
-    public DriveState findDriveStateById(@PathVariable Long id, Principal principal) throws ItemNotFoundException {
+    public DriveState findDriveStateById(@PathVariable Long id, Principal principal,
+                                         HttpServletRequest request) throws ItemNotFoundException {
+
+        log.info(LogFormat.urlLogFormat(request,principal.getName()));
         return driveStateService.findDriveStateById(id, principal);
     }
 
     @GetMapping("/vehicles/{id}/data_request/gui_settings")
-    public GuiSettings findGUISettingsById(@PathVariable Long id, Principal principal) throws ItemNotFoundException {
+    public GuiSettings findGUISettingsById(@PathVariable Long id, Principal principal,
+                                           HttpServletRequest request) throws ItemNotFoundException {
+
+        log.info(LogFormat.urlLogFormat(request,principal.getName()));
         return guiSettingsService.findGUISettingsById(id, principal);
     }
 

@@ -99,14 +99,13 @@ public class ClimateStateController {
      * @param principal The currently logged in user
      * @param driverTemp - Temperature in celsius
      * @param passengerTemp Temperature in celsius
-     * @return
+     * @return - returns the standard command response. we don't want to return that if there is an exception.
      */
     @GetMapping("/vehicles/{id}/command/set_temps")
     public CommandResponse setTempById(@PathVariable Long id, Principal principal,
                                        @RequestParam (value = "driver_temp", required = false) Float driverTemp,
                                        @RequestParam (value = "passenger_temp",required = false) Float passengerTemp,
-                                       HttpServletRequest request)
-            throws ItemNotFoundException {
+                                       HttpServletRequest request)throws ItemNotFoundException {
 
         log.info(LogFormat.urlLogFormat(request,principal.getName()));
 
@@ -127,7 +126,4 @@ public class ClimateStateController {
             throw new ItemNotFoundException(id, "climate state");
         }
     }
-
-
-
 }
