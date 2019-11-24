@@ -2,6 +2,8 @@ package com.tesla.springboot.evapi.services;
 
 import com.tesla.springboot.evapi.entities.Vehicle;
 import com.tesla.springboot.evapi.entities.VehicleState;
+import com.tesla.springboot.evapi.exceptions.DataExpectedException;
+import com.tesla.springboot.evapi.exceptions.DataOutOfBoundsException;
 import com.tesla.springboot.evapi.exceptions.ItemNotFoundException;
 import com.tesla.springboot.evapi.repositories.VehicleRepository;
 import com.tesla.springboot.evapi.repositories.VehicleStateRepository;
@@ -60,4 +62,56 @@ public class VehicleStateServiceImpl implements VehicleStateService  {
         }
     }
 
-}
+    /**
+     * Allows the caller to control the roof.
+     * Can use predefined percentages or can be defined custom.
+     *
+     *       open - 100%
+     *       closed - 0%
+     *       comfort - 80%
+     *       vent - 15%
+     *       move - specify {percent}
+     * @param principal - The id of the vehicle we to control the sun roof of
+     * @param state
+     * @param percent - The percentage we want to open uup
+     */
+
+
+    @Override
+    public void controlSunRoofById(Long id, Principal principal, String state, Optional<Integer> percent) {
+
+        Optional<Vehicle> vehicle = vehicleRepository.findByIdAndUserId(id, principal.getName());
+
+        if(vehicle.isPresent()) {
+            //Grab VehicleState
+            Optional<VehicleState> vehicleState = vehicleStateRepository.findById(id);
+
+            if (vehicleState.isPresent()){
+                VehicleState vState = vehicleState.get();
+
+                if (state.equalsIgnoreCase("open"))
+                    vState.setSunRoofPercentOpen(100);
+                else if (state.equalsIgnoreCase("closed"))
+                    vState.setSunRoofPercentOpen(0);
+                else if (state.equalsIgnoreCase("comfort"))
+                    vState.setSunRoofPercentOpen(80);
+                else if (state.equalsIgnoreCase("vent"))
+                    vState.setSunRoofPercentOpen(15);
+                else if (state.equalsIgnoreCase("move")){
+                    if (!percent.isPresent()) //if we get the custom keyword we're expecting a percentage
+                        throw new DataExpectedException("Expected a percentage between 0 and 100 ");
+                    if(percent.get()> 100 || percent.get() < 0)
+                        throw new DataOutOfBoundsException("Expected a percentage between 0 and 100 ");
+                    vState.setSunRoofPercentOpen(percent.get());
+                }
+            }
+            else{ //we found the vehicle but it doesn't have a state record associated with it.
+                throw new ItemNotFoundException(id, "vehicle state");
+            }
+        }
+        else {
+            throw new ItemNotFoundException(id, "vehicle state");
+        }
+    } //close method
+
+} //close class

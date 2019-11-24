@@ -8,7 +8,7 @@ package com.tesla.springboot.evapi.controlleradvice;
 import com.tesla.springboot.evapi.exceptions.ApiError;
 import com.tesla.springboot.evapi.exceptions.DataExpectedException;
 import com.tesla.springboot.evapi.exceptions.ItemNotFoundException;
-import com.tesla.springboot.evapi.exceptions.TemperatureOutOfBoundsException;
+import com.tesla.springboot.evapi.exceptions.DataOutOfBoundsException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,8 +22,8 @@ public class RestExceptionHandler {
         return new ResponseEntity<Object>(err,err.getStatus());
     }
 
-    @ExceptionHandler(TemperatureOutOfBoundsException.class)
-    public ResponseEntity<Object> handleTempOutOfBoundsException(TemperatureOutOfBoundsException e){
+    @ExceptionHandler(DataOutOfBoundsException.class)
+    public ResponseEntity<Object> handleTempOutOfBoundsException(DataOutOfBoundsException e){
         ApiError err = new ApiError(HttpStatus.BAD_REQUEST,e);
         return new ResponseEntity<Object>(err,err.getStatus());
     }

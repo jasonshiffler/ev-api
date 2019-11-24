@@ -8,8 +8,8 @@ package com.tesla.springboot.evapi.services;
 import com.tesla.springboot.evapi.entities.ClimateState;
 import com.tesla.springboot.evapi.entities.Vehicle;
 import com.tesla.springboot.evapi.exceptions.DataExpectedException;
+import com.tesla.springboot.evapi.exceptions.DataOutOfBoundsException;
 import com.tesla.springboot.evapi.exceptions.ItemNotFoundException;
-import com.tesla.springboot.evapi.exceptions.TemperatureOutOfBoundsException;
 import com.tesla.springboot.evapi.repositories.ClimateStateRepository;
 import com.tesla.springboot.evapi.repositories.VehicleRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -50,6 +50,7 @@ public class ClimateStateServiceImpl implements ClimateStateService {
     @Override
     public ClimateState findClimateStateById(Long id, Principal principal) {
 
+        //Check to see if there is a vehicle that corresponds to the id and principal
         Optional<Vehicle> vehicle = vehicleRepository.findByIdAndUserId(id, principal.getName());
 
         if(vehicle.isPresent()) {
@@ -106,14 +107,15 @@ public class ClimateStateServiceImpl implements ClimateStateService {
      * @param id - The primary key of the climate state record we want to change the temperature of
      * @param principal The user making the update request
      * @param driverTemp - The new temperature setting for the driver's side. Units are in Celsius.
-     *                   If the value is null it will be ignored
+     *                   If the value isn't present it will be ignored
      * @param passengerTemp - The new temperature setting for the driver's side. Units are in Celsius.
-     *                      If the value is null it will be ignored
+     *                      If the value isn't present it will be ignored
      */
     @Override
-    public void setTempById(Long id, Principal principal, Float driverTemp, Float passengerTemp) {
+    public void setTempById(Long id, Principal principal, Optional<Float> driverTemp, Optional<Float> passengerTemp) {
 
-        if (driverTemp == null && passengerTemp == null)
+        //Need to have at least one of these values set
+        if (!driverTemp.isPresent() && !passengerTemp.isPresent())
             throw new DataExpectedException();
 
         // Check to see if there is a vehicle with the same id. Also verify the record requested is
@@ -125,30 +127,35 @@ public class ClimateStateServiceImpl implements ClimateStateService {
 
             if (climateState.isPresent()) {
                 ClimateState climate = climateState.get();
-                 if (driverTemp != null) {                   //if the driver temp has been set
-                   if (driverTemp > climate.getMaxAvailTemp() ||
-                           driverTemp < climate.getMinAvailTemp()) // and isn't within an acceptable range
-                     throw new TemperatureOutOfBoundsException(climate.getMinAvailTemp(), climate.getMaxAvailTemp());
-                   climate.setDriverTempSetting(driverTemp);  // if within a good range update the object
+                 if (driverTemp.isPresent()) {                   //if the driver temp has been set
+                   if (driverTemp.get() > climate.getMaxAvailTemp() ||
+                           driverTemp.get() < climate.getMinAvailTemp()) // and isn't within an acceptable range
+                     throw new DataOutOfBoundsException("Temperature must be between ",
+                             climate.getMinAvailTemp(),
+                             climate.getMaxAvailTemp(),
+                             " degrees Celsius");
+                   climate.setDriverTempSetting(driverTemp.get());  // if within a good range update the object
                                                                // with the new value
                  }
-                if (passengerTemp != null) { // if the passenger temp has been set
-                    if (passengerTemp > climate.getMaxAvailTemp() ||
-                            passengerTemp < climate.getMinAvailTemp()) // and isn't within an acceptable range
+                if (passengerTemp.isPresent()) { // if the passenger temp has been set
+                    if (passengerTemp.get() > climate.getMaxAvailTemp() ||
+                            passengerTemp.get() < climate.getMinAvailTemp()) // and isn't within an acceptable range
 
-                        throw new TemperatureOutOfBoundsException(climate.getMinAvailTemp(), climate.getMaxAvailTemp());
-                    climate.setPassengerTempSetting(passengerTemp); //update the value if within a good range
+                        throw new DataOutOfBoundsException("Temperature must be between ",
+                                climate.getMinAvailTemp(),
+                                climate.getMaxAvailTemp(),
+                                " degrees Celsius");
+                    climate.setPassengerTempSetting(passengerTemp.get()); //update the value if within a good range
                 }
                 this.climateStateRepository.save(climate); //Save the record in the database
             }
-            else {
-                throw new ItemNotFoundException(id, "climate state"); // If the vehicle doesn't have a climate state
-            }                                                         // record
+            else { // We found a vehicle but not a climate state for it.
+                throw new ItemNotFoundException(id, "climate state");
+            }
         }
-        else{
+        else { //If we didn't find a vehicle for this user with a matching id
             throw new ItemNotFoundException(id, "climate state"); //If no results came back from the vehicle repository
         }
 
     } // close method
 }
-

@@ -7,14 +7,15 @@ package com.tesla.springboot.evapi.controllers;
 
 import com.tesla.springboot.evapi.entities.ClimateState;
 import com.tesla.springboot.evapi.exceptions.DataExpectedException;
+import com.tesla.springboot.evapi.exceptions.DataOutOfBoundsException;
 import com.tesla.springboot.evapi.exceptions.ItemNotFoundException;
-import com.tesla.springboot.evapi.exceptions.TemperatureOutOfBoundsException;
 import com.tesla.springboot.evapi.services.ClimateStateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.Optional;
 
 @RestController
 @Secured("ROLE_USER") //We only want authenticated users to be able to access the controller
@@ -89,15 +90,18 @@ public class ClimateStateController {
                                        @RequestParam (value = "driver_temp", required = false) Float driverTemp,
                                        @RequestParam (value = "passenger_temp",required = false) Float passengerTemp) {
 
+        Optional<Float> dTemp = Optional.ofNullable(driverTemp);
+        Optional<Float> pTemp = Optional.ofNullable(passengerTemp);
+
         try {
-            climateStateService.setTempById(id, principal, driverTemp, passengerTemp);
+            climateStateService.setTempById(id, principal, dTemp, pTemp);
             return new CommandResponse();
         }
         catch(DataExpectedException e){
             throw new DataExpectedException();
         }
-        catch (TemperatureOutOfBoundsException e){
-            throw new TemperatureOutOfBoundsException(e.getMessage());
+        catch (DataOutOfBoundsException e){
+            throw new DataOutOfBoundsException(e.getMessage());
         }
         catch (ItemNotFoundException e){
             throw new ItemNotFoundException(id, "climate state");
