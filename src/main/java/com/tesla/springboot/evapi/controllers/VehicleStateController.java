@@ -100,24 +100,20 @@ public class VehicleStateController {
                                               @RequestParam(value = "state",required = true) String state,
                                               @RequestParam(value = "percent",required = false) Integer percent,
                                               HttpServletRequest request,
-                                              Principal principal)  {
+                                              Principal principal) throws ItemNotFoundException  {
         //Log the request
         log.info(LogFormat.urlLogFormat(request,principal.getName()));
 
         Optional<Integer> optPercent = Optional.ofNullable(percent);
-/*
+
         try {
             vehicleStateService.controlSunRoofById(id,principal,state, optPercent);
             return new CommandResponse();
         }
+        catch (ItemNotFoundException e){
+            throw new ItemNotFoundException(id, "vehicle state");
+        }
 
-*/
+    } //close method
 
-
-        return new CommandResponse();
-    }
-
-
-
-
-}
+} //close class

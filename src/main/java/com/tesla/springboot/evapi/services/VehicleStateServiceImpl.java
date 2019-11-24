@@ -63,9 +63,8 @@ public class VehicleStateServiceImpl implements VehicleStateService  {
     }
 
     /**
-     * Allows the caller to control the roof.
+     * Allows the caller to control the sunroof.
      * Can use predefined percentages or can be defined custom.
-     *
      *       open - 100%
      *       closed - 0%
      *       comfort - 80%
@@ -75,8 +74,6 @@ public class VehicleStateServiceImpl implements VehicleStateService  {
      * @param state
      * @param percent - The percentage we want to open uup
      */
-
-
     @Override
     public void controlSunRoofById(Long id, Principal principal, String state, Optional<Integer> percent)
             throws ItemNotFoundException {
@@ -90,20 +87,37 @@ public class VehicleStateServiceImpl implements VehicleStateService  {
             if (vehicleState.isPresent()){
                 VehicleState vState = vehicleState.get();
 
-                if (state.equalsIgnoreCase("open"))
+                if (state.equalsIgnoreCase("open")) {
                     vState.setSunRoofPercentOpen(100);
-                else if (state.equalsIgnoreCase("closed"))
+                    vState.setSunRoofState("open");
+                    this.vehicleStateRepository.save(vState);
+                }
+                else if (state.equalsIgnoreCase("closed")) {
                     vState.setSunRoofPercentOpen(0);
-                else if (state.equalsIgnoreCase("comfort"))
+                    vState.setSunRoofState("closed");
+                    this.vehicleStateRepository.save(vState);
+                }
+                else if (state.equalsIgnoreCase("comfort")) {
                     vState.setSunRoofPercentOpen(80);
-                else if (state.equalsIgnoreCase("vent"))
+                    vState.setSunRoofState("comfort");
+                    this.vehicleStateRepository.save(vState);
+                }
+                else if (state.equalsIgnoreCase("vent")) {
                     vState.setSunRoofPercentOpen(15);
+                    vState.setSunRoofState("vent");
+                    this.vehicleStateRepository.save(vState);
+                }
                 else if (state.equalsIgnoreCase("move")){
                     if (!percent.isPresent()) //if we get the custom keyword we're expecting a percentage
                         throw new DataExpectedException("Expected a percentage between 0 and 100 ");
                     if(percent.get()> 100 || percent.get() < 0)
                         throw new DataOutOfBoundsException("Expected a percentage between 0 and 100 ");
                     vState.setSunRoofPercentOpen(percent.get());
+                    vState.setSunRoofState("move");
+                    this.vehicleStateRepository.save(vState);
+                }
+                else {
+                    throw new DataOutOfBoundsException("Expected a state of open, closed, comfort, vent, or move");
                 }
             }
             else{ //we found the vehicle but it doesn't have a state record associated with it.
@@ -113,6 +127,8 @@ public class VehicleStateServiceImpl implements VehicleStateService  {
         else {
             throw new ItemNotFoundException(id, "vehicle state");
         }
+
+
     } //close method
 
 } //close class
