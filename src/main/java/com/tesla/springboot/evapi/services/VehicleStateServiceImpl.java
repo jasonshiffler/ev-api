@@ -39,7 +39,7 @@ public class VehicleStateServiceImpl implements VehicleStateService  {
      */
 
     @Override
-    public void lockUnlockDoors(Long id, Principal principal,Boolean locked) {
+    public void lockUnlockDoors(Long id, Principal principal,Boolean locked) throws ItemNotFoundException {
 
         Optional<Vehicle> vehicle = vehicleRepository.findByIdAndUserId(id, principal.getName());
 
@@ -78,7 +78,8 @@ public class VehicleStateServiceImpl implements VehicleStateService  {
 
 
     @Override
-    public void controlSunRoofById(Long id, Principal principal, String state, Optional<Integer> percent) {
+    public void controlSunRoofById(Long id, Principal principal, String state, Optional<Integer> percent)
+            throws ItemNotFoundException {
 
         Optional<Vehicle> vehicle = vehicleRepository.findByIdAndUserId(id, principal.getName());
 

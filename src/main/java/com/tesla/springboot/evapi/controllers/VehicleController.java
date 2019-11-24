@@ -10,6 +10,7 @@ import com.tesla.springboot.evapi.entities.ChargeState;
 import com.tesla.springboot.evapi.entities.DriveState;
 import com.tesla.springboot.evapi.entities.GuiSettings;
 import com.tesla.springboot.evapi.entities.Vehicle;
+import com.tesla.springboot.evapi.exceptions.ItemNotFoundException;
 import com.tesla.springboot.evapi.services.ChargeStateService;
 import com.tesla.springboot.evapi.services.DriveStateService;
 import com.tesla.springboot.evapi.services.GuiSettingsService;
@@ -61,7 +62,7 @@ public class VehicleController {
     public Iterable<Vehicle> findAllVehicles(@RequestParam(value = "display_name",required = false) String displayName,
                                              @RequestParam(value = "size",required = false) Integer size,
                                              @RequestParam(value = "page",required = false) Integer page,
-                                             HttpServletRequest request, Principal principal){
+                                             HttpServletRequest request, Principal principal) throws ItemNotFoundException {
 
         //Log the request
         log.info(LogFormat.urlLogFormat(request,principal.getName()));
@@ -86,7 +87,7 @@ public class VehicleController {
      */
     @JsonView(VehicleView.summary.class)
     @GetMapping("/vehicles/{id}")
-    public Vehicle findVehicleById(@PathVariable Long id, Principal principal) {
+    public Vehicle findVehicleById(@PathVariable Long id, Principal principal) throws ItemNotFoundException {
        return vehicleService.findVehicleById(id,principal);
      }
 
@@ -99,7 +100,7 @@ public class VehicleController {
 
     @JsonView(VehicleView.detail.class)
     @GetMapping("/vehicles/{id}/vehicle_data")
-    public Vehicle findVehicleDataById(@PathVariable Long id, Principal principal) {
+    public Vehicle findVehicleDataById(@PathVariable Long id, Principal principal) throws ItemNotFoundException {
         return vehicleService.findVehicleById(id,principal);
     }
 
@@ -111,7 +112,7 @@ public class VehicleController {
      */
 
     @GetMapping("/vehicles/{id}/command/flash_lights")
-    public CommandResponse flashVehicleLightsById(@PathVariable Long id, Principal principal) {
+    public CommandResponse flashVehicleLightsById(@PathVariable Long id, Principal principal) throws ItemNotFoundException {
         return vehicleService.flashVehicleLightsById(id,principal);
     }
 
@@ -123,23 +124,23 @@ public class VehicleController {
      */
 
     @GetMapping("/vehicles/{id}/command/honk_horn")
-    public CommandResponse honkVehicleHornById(@PathVariable Long id, Principal principal) {
+    public CommandResponse honkVehicleHornById(@PathVariable Long id, Principal principal) throws ItemNotFoundException {
         return vehicleService.honkVehicleHornById(id,principal);
     }
 
 
     @GetMapping("/vehicles/{id}/data_request/charge_state")
-    public ChargeState findChargeStateById(@PathVariable Long id, Principal principal) {
+    public ChargeState findChargeStateById(@PathVariable Long id, Principal principal) throws ItemNotFoundException {
         return chargeStateService.findChargeStateById(id, principal);
     }
 
     @GetMapping("/vehicles/{id}/data_request/drive_state")
-    public DriveState findDriveStateById(@PathVariable Long id, Principal principal) {
+    public DriveState findDriveStateById(@PathVariable Long id, Principal principal) throws ItemNotFoundException {
         return driveStateService.findDriveStateById(id, principal);
     }
 
     @GetMapping("/vehicles/{id}/data_request/gui_settings")
-    public GuiSettings findGUISettingsById(@PathVariable Long id, Principal principal) {
+    public GuiSettings findGUISettingsById(@PathVariable Long id, Principal principal) throws ItemNotFoundException {
         return guiSettingsService.findGUISettingsById(id, principal);
     }
 

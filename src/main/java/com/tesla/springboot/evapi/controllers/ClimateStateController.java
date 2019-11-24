@@ -10,15 +10,19 @@ import com.tesla.springboot.evapi.exceptions.DataExpectedException;
 import com.tesla.springboot.evapi.exceptions.DataOutOfBoundsException;
 import com.tesla.springboot.evapi.exceptions.ItemNotFoundException;
 import com.tesla.springboot.evapi.services.ClimateStateService;
+import com.tesla.springboot.evapi.utility.LogFormat;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.Optional;
 
 @RestController
 @Secured("ROLE_USER") //We only want authenticated users to be able to access the controller
+@Slf4j
 public class ClimateStateController {
 
     private final ClimateStateService climateStateService;
@@ -35,7 +39,12 @@ public class ClimateStateController {
      * @return - The Climate State data in JSON format
      */
     @GetMapping("/vehicles/{id}/data_request/climate_state")
-    public ClimateState findClimateStateById(@PathVariable Long id, Principal principal) {
+    public ClimateState findClimateStateById(@PathVariable Long id, Principal principal, HttpServletRequest request)
+            throws ItemNotFoundException {
+
+        log.info(LogFormat.urlLogFormat(request,principal.getName()));
+
+
         return climateStateService.findClimateStateById(id, principal);
     }
 
@@ -46,7 +55,10 @@ public class ClimateStateController {
      * @return
      */
     @GetMapping("/vehicles/{id}/command/auto_conditioning_start")
-    public CommandResponse startClimateHVACById(@PathVariable Long id, Principal principal) {
+    public CommandResponse startClimateHVACById(@PathVariable Long id, Principal principal,
+                                                HttpServletRequest request) throws ItemNotFoundException {
+
+        log.info(LogFormat.urlLogFormat(request,principal.getName()));
 
         try {
             climateStateService.changeClimateState(id, principal, true);
@@ -63,7 +75,11 @@ public class ClimateStateController {
      * @return
      */
     @GetMapping("/vehicles/{id}/command/auto_conditioning_stop")
-    public CommandResponse stopClimateHVACById(@PathVariable Long id, Principal principal) {
+    public CommandResponse stopClimateHVACById(@PathVariable Long id, Principal principal,
+                                               HttpServletRequest request) throws ItemNotFoundException {
+
+        log.info(LogFormat.urlLogFormat(request,principal.getName()));
+
         try {
             climateStateService.changeClimateState(id, principal, false);
             return new CommandResponse();
@@ -88,7 +104,11 @@ public class ClimateStateController {
     @GetMapping("/vehicles/{id}/command/set_temps")
     public CommandResponse setTempById(@PathVariable Long id, Principal principal,
                                        @RequestParam (value = "driver_temp", required = false) Float driverTemp,
-                                       @RequestParam (value = "passenger_temp",required = false) Float passengerTemp) {
+                                       @RequestParam (value = "passenger_temp",required = false) Float passengerTemp,
+                                       HttpServletRequest request)
+            throws ItemNotFoundException {
+
+        log.info(LogFormat.urlLogFormat(request,principal.getName()));
 
         Optional<Float> dTemp = Optional.ofNullable(driverTemp);
         Optional<Float> pTemp = Optional.ofNullable(passengerTemp);

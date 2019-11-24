@@ -48,7 +48,7 @@ public class ClimateStateServiceImpl implements ClimateStateService {
      * @return - The climate state object
      */
     @Override
-    public ClimateState findClimateStateById(Long id, Principal principal) {
+    public ClimateState findClimateStateById(Long id, Principal principal) throws ItemNotFoundException {
 
         //Check to see if there is a vehicle that corresponds to the id and principal
         Optional<Vehicle> vehicle = vehicleRepository.findByIdAndUserId(id, principal.getName());
@@ -75,7 +75,7 @@ public class ClimateStateServiceImpl implements ClimateStateService {
      */
 
     @Override
-    public void changeClimateState(Long id, Principal principal, Boolean on) {
+    public void changeClimateState(Long id, Principal principal, Boolean on) throws ItemNotFoundException {
 
         // Check to see if there is a vehicle with the same id. Also verify the record requested is
         // associated with the same user.
@@ -112,7 +112,7 @@ public class ClimateStateServiceImpl implements ClimateStateService {
      *                      If the value isn't present it will be ignored
      */
     @Override
-    public void setTempById(Long id, Principal principal, Optional<Float> driverTemp, Optional<Float> passengerTemp) {
+    public void setTempById(Long id, Principal principal, Optional<Float> driverTemp, Optional<Float> passengerTemp) throws ItemNotFoundException {
 
         //Need to have at least one of these values set
         if (!driverTemp.isPresent() && !passengerTemp.isPresent())

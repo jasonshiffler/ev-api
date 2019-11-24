@@ -42,7 +42,11 @@ public class VehicleStateController {
      */
 
     @GetMapping("/vehicles/{id}/command/door_unlock")
-    public CommandResponse unlockDoorsById(@PathVariable Long id, Principal principal){
+    public CommandResponse unlockDoorsById(@PathVariable Long id, Principal principal, HttpServletRequest request)
+            throws ItemNotFoundException {
+
+        log.info(LogFormat.urlLogFormat(request,principal.getName()));
+
         try{
             vehicleStateService.lockUnlockDoors(id,principal,false);
         }
@@ -60,7 +64,10 @@ public class VehicleStateController {
      * */
 
     @GetMapping("/vehicles/{id}/command/door_lock")
-    public CommandResponse lockDoorsById(@PathVariable Long id, Principal principal){
+    public CommandResponse lockDoorsById(@PathVariable Long id, Principal principal,HttpServletRequest request)
+            throws ItemNotFoundException {
+
+        log.info(LogFormat.urlLogFormat(request,principal.getName()));
         try{
             vehicleStateService.lockUnlockDoors(id,principal,true);
         }
@@ -88,23 +95,23 @@ public class VehicleStateController {
      * @return The standard command response
      */
 
-    @GetMapping("/vehicles/{id}/command/door_lock")
+    @GetMapping("/vehicles/{id}/command/sun_roof_control")
     public CommandResponse controlSunRoofById(@PathVariable Long id,
                                               @RequestParam(value = "state",required = true) String state,
                                               @RequestParam(value = "percent",required = false) Integer percent,
                                               HttpServletRequest request,
-                                              Principal principal){
+                                              Principal principal)  {
         //Log the request
         log.info(LogFormat.urlLogFormat(request,principal.getName()));
 
         Optional<Integer> optPercent = Optional.ofNullable(percent);
-
+/*
         try {
             vehicleStateService.controlSunRoofById(id,principal,state, optPercent);
             return new CommandResponse();
         }
-        
 
+*/
 
 
         return new CommandResponse();

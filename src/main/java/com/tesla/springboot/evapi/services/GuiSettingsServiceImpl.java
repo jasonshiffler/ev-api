@@ -24,7 +24,7 @@ public class GuiSettingsServiceImpl implements GuiSettingsService {
     }
 
     @Override
-    public GuiSettings findGUISettingsById(Long id, Principal principal) {
+    public GuiSettings findGUISettingsById(Long id, Principal principal) throws ItemNotFoundException {
         Optional<Vehicle> vehicle = vehicleRepository.findByIdAndUserId(id, principal.getName());
 
         if (vehicle.isPresent()) {

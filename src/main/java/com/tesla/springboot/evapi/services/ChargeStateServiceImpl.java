@@ -24,7 +24,7 @@ public class ChargeStateServiceImpl implements ChargeStateService {
     }
 
     @Override
-    public ChargeState findChargeStateById(Long id, Principal principal) {
+    public ChargeState findChargeStateById(Long id, Principal principal) throws ItemNotFoundException {
 
         /*Check to see if there is a matching vehicle with the same username as the id's of the corresponding tables
         are identical

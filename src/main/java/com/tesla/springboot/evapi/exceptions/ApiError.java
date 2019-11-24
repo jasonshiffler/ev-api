@@ -12,7 +12,7 @@ public class ApiError {
     private HttpStatus status;
     private String message;
 
-    public ApiError(HttpStatus status, RuntimeException e) {
+    public ApiError(HttpStatus status, Exception e) {
         this.status = status;
         this.message = e.getMessage();
         this.timestamp = LocalDateTime.now();

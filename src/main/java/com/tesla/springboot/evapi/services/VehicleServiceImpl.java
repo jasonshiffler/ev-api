@@ -47,7 +47,7 @@ public class VehicleServiceImpl implements VehicleService {
      */
 
     @Override
-    public Iterable<Vehicle> findAllVehicles(Integer size, Integer page, Principal principal) {
+    public Iterable<Vehicle> findAllVehicles(Integer size, Integer page, Principal principal) throws ItemNotFoundException {
 
         size = adjustQuerySizeService.AdjustQuerySize(size);
         Pageable request = PageRequest.of(page, size);
@@ -70,7 +70,7 @@ public class VehicleServiceImpl implements VehicleService {
      */
 
     @Override
-    public Vehicle findVehicleById(Long id, Principal principal) {
+    public Vehicle findVehicleById(Long id, Principal principal) throws ItemNotFoundException {
 
         Optional<Vehicle> vehicle = vehicleRepository.findByIdAndUserId(id,principal.getName());
 
@@ -92,7 +92,7 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public Iterable<Vehicle> findAllVehiclesByDisplayName(String displayName, Integer size,
-                                                          Integer page, Principal principal) {
+                                                          Integer page, Principal principal) throws ItemNotFoundException {
 
         size = adjustQuerySizeService.AdjustQuerySize(size);
         Pageable request = PageRequest.of(page, size);
@@ -116,7 +116,7 @@ public class VehicleServiceImpl implements VehicleService {
      */
 
     @Override
-    public CommandResponse flashVehicleLightsById(Long id, Principal principal) {
+    public CommandResponse flashVehicleLightsById(Long id, Principal principal) throws ItemNotFoundException {
 
         Optional<Vehicle> vehicle = vehicleRepository.findByIdAndUserId(id,principal.getName());
 
@@ -137,7 +137,7 @@ public class VehicleServiceImpl implements VehicleService {
      */
 
     @Override
-    public CommandResponse honkVehicleHornById(Long id, Principal principal) {
+    public CommandResponse honkVehicleHornById(Long id, Principal principal) throws ItemNotFoundException {
 
         Optional<Vehicle> vehicle = vehicleRepository.findByIdAndUserId(id,principal.getName());
 

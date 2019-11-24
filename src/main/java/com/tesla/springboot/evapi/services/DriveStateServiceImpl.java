@@ -29,7 +29,7 @@ public class DriveStateServiceImpl implements DriveStateService {
     }
 
     @Override
-    public DriveState findDriveStateById(Long id, Principal principal) {
+    public DriveState findDriveStateById(Long id, Principal principal) throws ItemNotFoundException {
 
         Optional<Vehicle> vehicle = vehicleRepository.findByIdAndUserId(id, principal.getName());
 

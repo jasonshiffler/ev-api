@@ -1,6 +1,6 @@
 package com.tesla.springboot.evapi.exceptions;
 
-public class ItemNotFoundException extends RuntimeException {
+public class ItemNotFoundException extends Exception {
 
     public ItemNotFoundException(){
         super("Item not found");
