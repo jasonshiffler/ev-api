@@ -11,5 +11,6 @@ import java.util.Optional;
 @Service
 public interface VehicleStateService {
     void lockUnlockDoors(Long id, Principal principal,Boolean locked) throws ItemNotFoundException;
-    void controlSunRoofById(Long id, Principal principal, String state, Optional<Integer> Percent) throws ItemNotFoundException, DataExpectedException, DataOutOfBoundsException;
+    void controlSunRoofById(Long id, Principal principal, String state, Optional<Integer> Percent) throws
+            ItemNotFoundException, DataExpectedException, DataOutOfBoundsException;
 }

@@ -10,4 +10,6 @@ import java.security.Principal;
 public interface ChargeStateService {
 
     ChargeState findChargeStateById(Long id, Principal principal) throws ItemNotFoundException;
+
+    void openCloseChargePortById(Long id, Principal principal, Boolean open) throws ItemNotFoundException;
 }

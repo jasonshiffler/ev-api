@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.Optional;
 
@@ -66,11 +67,12 @@ public class VehicleServiceImpl implements VehicleService {
      *
      * @param id - The id of the record being requested
      * @param principal - The user associated with the request
+     * @param request
      * @return - the Vehicle object
      */
 
     @Override
-    public Vehicle findVehicleById(Long id, Principal principal) throws ItemNotFoundException {
+    public Vehicle findVehicleById(Long id, Principal principal, HttpServletRequest request) throws ItemNotFoundException {
 
         Optional<Vehicle> vehicle = vehicleRepository.findByIdAndUserId(id,principal.getName());
 

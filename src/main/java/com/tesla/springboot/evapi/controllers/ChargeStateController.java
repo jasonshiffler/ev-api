@@ -39,4 +39,52 @@ public class ChargeStateController {
         return chargeStateService.findChargeStateById(id, principal);
     }
 
+    /**
+     * Allows the user to open the charge port door
+     * @param id - id of the car to open the charge port door on.
+     * @param principal - user making the request
+     * @param request - http request info so we can do logging
+     * @return - returns a Charge State Object
+     * @throws ItemNotFoundException
+     */
+    @GetMapping("/vehicles/{id}/command/charge_port_door_{state}")
+    public CommandResponse openChargePortById(@PathVariable Long id, Principal principal,
+                                           HttpServletRequest request) throws ItemNotFoundException {
+
+        log.info(LogFormat.urlLogFormat(request,principal.getName()));
+
+        try {
+            chargeStateService.openCloseChargePortById(id, principal, true);
+            return new CommandResponse();
+        }
+        catch (ItemNotFoundException e){
+            throw new ItemNotFoundException(e.getMessage());
+        }
+    }
+
+    /**
+     * Allows the user to close the charge port door
+     * @param id - id of the car to close the charge port door on.
+     * @param principal - user making the request
+     * @param request - http request info so we can do logging
+     * @return - returns a Charge State Object
+     * @throws ItemNotFoundException
+     */
+    @GetMapping("/vehicles/{id}/command/charge_port_door_close")
+    public CommandResponse closeChargePortById(@PathVariable Long id, Principal principal,
+                                              HttpServletRequest request) throws ItemNotFoundException {
+
+        log.info(LogFormat.urlLogFormat(request,principal.getName()));
+
+        try {
+            chargeStateService.openCloseChargePortById(id, principal, false);
+            return new CommandResponse();
+        }
+        catch (ItemNotFoundException e){
+            throw new ItemNotFoundException(e.getMessage());
+        }
+    }
+
+
+
 }

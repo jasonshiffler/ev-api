@@ -87,7 +87,7 @@ public class VehicleController {
                                    HttpServletRequest request) throws ItemNotFoundException {
 
         log.info(LogFormat.urlLogFormat(request,principal.getName()));
-        return vehicleService.findVehicleById(id,principal);
+        return vehicleService.findVehicleById(id,principal, request);
      }
 
     /**
@@ -102,7 +102,7 @@ public class VehicleController {
     public Vehicle findVehicleDataById(@PathVariable Long id, Principal principal,
                                        HttpServletRequest request)throws ItemNotFoundException {
         log.info(LogFormat.urlLogFormat(request,principal.getName()));
-        return vehicleService.findVehicleById(id,principal);
+        return vehicleService.findVehicleById(id,principal, request);
     }
 
     /**
