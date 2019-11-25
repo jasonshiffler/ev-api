@@ -112,7 +112,11 @@ public class ClimateStateServiceImpl implements ClimateStateService {
      *                      If the value isn't present it will be ignored
      */
     @Override
-    public void setTempById(Long id, Principal principal, Optional<Float> driverTemp, Optional<Float> passengerTemp) throws ItemNotFoundException {
+    public void setTempById(Long id, Principal principal,
+                            Optional<Float> driverTemp,
+                            Optional<Float> passengerTemp) throws ItemNotFoundException,
+            DataExpectedException,
+            DataOutOfBoundsException {
 
         //Need to have at least one of these values set
         if (!driverTemp.isPresent() && !passengerTemp.isPresent())

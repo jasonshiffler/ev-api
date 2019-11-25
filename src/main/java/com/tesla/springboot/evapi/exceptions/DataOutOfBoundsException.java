@@ -1,6 +1,6 @@
 package com.tesla.springboot.evapi.exceptions;
 
-public class DataOutOfBoundsException extends RuntimeException {
+public class DataOutOfBoundsException extends Exception {
 
     public DataOutOfBoundsException(String Message){
         super(Message);

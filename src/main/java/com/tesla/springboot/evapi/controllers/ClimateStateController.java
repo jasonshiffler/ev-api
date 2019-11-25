@@ -105,8 +105,10 @@ public class ClimateStateController {
     public CommandResponse setTempById(@PathVariable Long id, Principal principal,
                                        @RequestParam (value = "driver_temp", required = false) Float driverTemp,
                                        @RequestParam (value = "passenger_temp",required = false) Float passengerTemp,
-                                       HttpServletRequest request)throws ItemNotFoundException {
+                                       HttpServletRequest request) throws ItemNotFoundException,DataExpectedException,
+                                                                          DataOutOfBoundsException
 
+    {
         log.info(LogFormat.urlLogFormat(request,principal.getName()));
 
         Optional<Float> dTemp = Optional.ofNullable(driverTemp);

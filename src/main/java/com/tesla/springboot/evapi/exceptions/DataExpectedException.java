@@ -1,6 +1,6 @@
 package com.tesla.springboot.evapi.exceptions;
 
-public class DataExpectedException extends RuntimeException {
+public class DataExpectedException extends Exception {
 
     public DataExpectedException (){
         super("Data was expected but not provided.");

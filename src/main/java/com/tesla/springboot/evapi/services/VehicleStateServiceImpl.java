@@ -76,7 +76,7 @@ public class VehicleStateServiceImpl implements VehicleStateService  {
      */
     @Override
     public void controlSunRoofById(Long id, Principal principal, String state, Optional<Integer> percent)
-            throws ItemNotFoundException {
+            throws ItemNotFoundException, DataExpectedException, DataOutOfBoundsException {
 
         Optional<Vehicle> vehicle = vehicleRepository.findByIdAndUserId(id, principal.getName());
 

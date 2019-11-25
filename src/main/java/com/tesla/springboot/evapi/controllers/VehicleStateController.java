@@ -5,6 +5,8 @@
 
 package com.tesla.springboot.evapi.controllers;
 
+import com.tesla.springboot.evapi.exceptions.DataExpectedException;
+import com.tesla.springboot.evapi.exceptions.DataOutOfBoundsException;
 import com.tesla.springboot.evapi.exceptions.ItemNotFoundException;
 import com.tesla.springboot.evapi.services.VehicleStateService;
 import com.tesla.springboot.evapi.utility.LogFormat;
@@ -100,7 +102,10 @@ public class VehicleStateController {
                                               @RequestParam(value = "state",required = true) String state,
                                               @RequestParam(value = "percent",required = false) Integer percent,
                                               HttpServletRequest request,
-                                              Principal principal) throws ItemNotFoundException  {
+                                              Principal principal) throws ItemNotFoundException, DataExpectedException,
+                                                                          DataOutOfBoundsException
+
+    {
         //Log the request
         log.info(LogFormat.urlLogFormat(request,principal.getName()));
 
@@ -112,6 +117,13 @@ public class VehicleStateController {
         }
         catch (ItemNotFoundException e){
             throw new ItemNotFoundException(id, "vehicle state");
+        }
+        catch (DataExpectedException e){
+            throw new DataExpectedException(e.getMessage());
+        }
+        catch( DataOutOfBoundsException e)
+        {
+            throw new DataOutOfBoundsException(e.getMessage());
         }
 
     } //close method
