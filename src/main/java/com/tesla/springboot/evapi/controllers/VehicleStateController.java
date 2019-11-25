@@ -22,8 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.Optional;
 
-import static java.util.Optional.of;
-
 @RestController
 @Secured("ROLE_USER") //We only want authenticated users to be able to access the controller
 @Slf4j
@@ -116,7 +114,7 @@ public class VehicleStateController {
             return new CommandResponse();
         }
         catch (ItemNotFoundException e){
-            throw new ItemNotFoundException(id, "vehicle state");
+            throw new ItemNotFoundException(id, "Vehicle State");
         }
         catch (DataExpectedException e){
             throw new DataExpectedException(e.getMessage());

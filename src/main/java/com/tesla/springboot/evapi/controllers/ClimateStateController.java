@@ -1,6 +1,5 @@
 /**
- * This controller handles any requests related to vehicle climate related requests
- *
+ * This controller handles any requests related to vehicle climate
  */
 
 package com.tesla.springboot.evapi.controllers;

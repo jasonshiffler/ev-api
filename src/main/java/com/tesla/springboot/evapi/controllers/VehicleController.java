@@ -6,12 +6,10 @@
 package com.tesla.springboot.evapi.controllers;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.tesla.springboot.evapi.entities.ChargeState;
 import com.tesla.springboot.evapi.entities.DriveState;
 import com.tesla.springboot.evapi.entities.GuiSettings;
 import com.tesla.springboot.evapi.entities.Vehicle;
 import com.tesla.springboot.evapi.exceptions.ItemNotFoundException;
-import com.tesla.springboot.evapi.services.ChargeStateService;
 import com.tesla.springboot.evapi.services.DriveStateService;
 import com.tesla.springboot.evapi.services.GuiSettingsService;
 import com.tesla.springboot.evapi.services.VehicleService;
@@ -32,17 +30,15 @@ public class VehicleController {
 
     private final VehicleService vehicleService;
     private final DriveStateService driveStateService;
-    private final ChargeStateService chargeStateService;
     private final GuiSettingsService guiSettingsService;
 
     @Autowired
     VehicleController(VehicleService vehicleService,
                       DriveStateService driveStateService,
-                      ChargeStateService chargeStateService,
                       GuiSettingsService guiSettingsService) {
+
         this.vehicleService = vehicleService;
         this.driveStateService = driveStateService;
-        this.chargeStateService = chargeStateService;
         this.guiSettingsService = guiSettingsService;
     }
 
@@ -136,15 +132,6 @@ public class VehicleController {
 
         log.info(LogFormat.urlLogFormat(request,principal.getName()));
         return vehicleService.honkVehicleHornById(id,principal);
-    }
-
-
-    @GetMapping("/vehicles/{id}/data_request/charge_state")
-    public ChargeState findChargeStateById(@PathVariable Long id, Principal principal,
-                                           HttpServletRequest request) throws ItemNotFoundException {
-
-        log.info(LogFormat.urlLogFormat(request,principal.getName()));
-        return chargeStateService.findChargeStateById(id, principal);
     }
 
     @GetMapping("/vehicles/{id}/data_request/drive_state")
