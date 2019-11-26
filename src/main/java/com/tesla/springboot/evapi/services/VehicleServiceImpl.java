@@ -24,18 +24,17 @@ import java.util.Optional;
 public class VehicleServiceImpl implements VehicleService {
 
     private final VehicleRepository vehicleRepository;
-    private final AdjustQuerySizeService adjustQuerySizeService;
 
     /**
      * Constructor, used so we can inject our dependencies
      * @param vehicleRepository - The repository used to access our vehicle data
-     * @param adjustQuerySizeService - A service that is used to adjust the query size based on configuration parameters
+     *
      */
 
     @Autowired
-    VehicleServiceImpl(VehicleRepository vehicleRepository, AdjustQuerySizeService adjustQuerySizeService){
+    VehicleServiceImpl(VehicleRepository vehicleRepository){
         this.vehicleRepository = vehicleRepository;
-        this.adjustQuerySizeService = adjustQuerySizeService;
+
     }
 
     /**
@@ -50,7 +49,7 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     public Iterable<Vehicle> findAllVehicles(Integer size, Integer page, Principal principal) throws ItemNotFoundException {
 
-        size = adjustQuerySizeService.AdjustQuerySize(size);
+
         Pageable request = PageRequest.of(page, size);
         Page<Vehicle> vehicles = vehicleRepository.findByUserId(principal.getName(),request);
 
@@ -96,7 +95,6 @@ public class VehicleServiceImpl implements VehicleService {
     public Iterable<Vehicle> findAllVehiclesByDisplayName(String displayName, Integer size,
                                                           Integer page, Principal principal) throws ItemNotFoundException {
 
-        size = adjustQuerySizeService.AdjustQuerySize(size);
         Pageable request = PageRequest.of(page, size);
         Page<Vehicle> vehicles = vehicleRepository.findByDisplayNameContainingAndUserId(displayName,
                 principal.getName(),request);

@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
-
+import com.tesla.springboot.evapi.utility.AdjustQuerySizeService;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 
@@ -31,15 +31,17 @@ public class VehicleController {
     private final VehicleService vehicleService;
     private final DriveStateService driveStateService;
     private final GuiSettingsService guiSettingsService;
+    private final AdjustQuerySizeService adjustQuerySizeService;
 
     @Autowired
     VehicleController(VehicleService vehicleService,
                       DriveStateService driveStateService,
-                      GuiSettingsService guiSettingsService) {
+                      GuiSettingsService guiSettingsService, AdjustQuerySizeService adjustQuerySizeService) {
 
         this.vehicleService = vehicleService;
         this.driveStateService = driveStateService;
         this.guiSettingsService = guiSettingsService;
+        this.adjustQuerySizeService = adjustQuerySizeService;
     }
 
     /**
@@ -62,6 +64,8 @@ public class VehicleController {
 
         //Log the request
         log.info(LogFormat.urlLogFormat(request,principal.getName()));
+
+        size = adjustQuerySizeService.AdjustQuerySize(size);
 
         // Set a default value for the page if none was passed in.
         if (page == null)
