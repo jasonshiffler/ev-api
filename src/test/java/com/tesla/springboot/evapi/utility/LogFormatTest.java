@@ -10,14 +10,14 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
-class LogFormatTest {
+public class LogFormatTest {
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
     }
 
     @Test
-    void urlLogFormatTest() {
+    public void urlLogFormatTest() {
 
         MockHttpServletRequest request = new MockHttpServletRequest();
         request.setRemoteAddr("12.45.212.176");

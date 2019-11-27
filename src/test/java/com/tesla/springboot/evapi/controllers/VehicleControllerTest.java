@@ -19,7 +19,7 @@ import static org.mockito.Mockito.verify;
 
 @DisplayName("Vehicle Controller Tests")
 @ExtendWith(MockitoExtension.class)
-class VehicleControllerTest {
+public class VehicleControllerTest {
 
     @Mock
     VehicleService vService;
@@ -38,69 +38,58 @@ class VehicleControllerTest {
     VehicleController controller;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
 
     }
 
     @Test
-    void findVehicleById() throws ItemNotFoundException {
+   public  void findVehicleByIdTest() throws ItemNotFoundException {
         controller.findVehicleById(5L,principal,request);
         verify(vService).findVehicleById(5L,principal,request);
     }
 
     @Test
-    void findAllVehicles() throws ItemNotFoundException {
-
-        Integer size = Integer.valueOf(4);
+    public void findAllVehiclesTest() throws ItemNotFoundException {
 
         //Test with all default values
         controller.findAllVehicles(null,null,null,request,principal);
         verify(vService).findAllVehicles(0,0, principal);
 
-        //Test with just size set
-        controller.findAllVehicles(null,size,null,request,principal);
-        verify(vService).findAllVehicles(size,0, principal);
+        //Test with all default values
+        controller.findAllVehicles(null,null,5,request,principal);
+        verify(vService).findAllVehicles(0,5, principal);
 
-        //Test with just page set
-        controller.findAllVehicles(null,null,3,request,principal);
-        verify(vService).findAllVehicles(size,3, principal);
-
-        //Test with  page and size set
-        controller.findAllVehicles(null,size,3,request,principal);
-        verify(vService).findAllVehicles(size,3, principal);
-
-        //Test with all parameters set
-        controller.findAllVehicles("car",5,3,request,principal);
-        verify(vService).findAllVehiclesByDisplayName("car", 5,3, principal);
+        //Test with all default values
+        controller.findAllVehicles("car",null,null,request,principal);
+        verify(vService).findAllVehiclesByDisplayName("car",0,0, principal);
     }
 
-
     @Test
-    void findVehicleDataById() throws ItemNotFoundException {
+    public void findVehicleDataByIdTest() throws ItemNotFoundException {
         controller.findVehicleDataById(5L,principal,request);
         verify(vService).findVehicleById(5L,principal,request);
     }
 
     @Test
-    void flashVehicleLightsById() throws ItemNotFoundException {
+    public void flashVehicleLightsByIdTest() throws ItemNotFoundException {
         controller.flashVehicleLightsById(5L,principal,request);
         verify(vService).flashVehicleLightsById(5L,principal);
     }
 
     @Test
-    void honkVehicleHornById()throws ItemNotFoundException {
+    public void honkVehicleHornByIdTest()throws ItemNotFoundException {
         controller.honkVehicleHornById(5L,principal,request);
         verify(vService).honkVehicleHornById(5L,principal);
     }
 
     @Test
-    void findDriveStateById() throws ItemNotFoundException {
+    public void findDriveStateByIdTest() throws ItemNotFoundException {
         controller.findDriveStateById(5L,principal,request);
         verify(dService).findDriveStateById(5L,principal);
     }
 
     @Test
-    void findGUISettingsById() throws ItemNotFoundException {
+    public void findGUISettingsByIdTest() throws ItemNotFoundException {
         controller.findGUISettingsById(5L,principal,request);
         verify(gService).findGUISettingsById(5L,principal);
     }

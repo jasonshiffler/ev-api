@@ -47,7 +47,7 @@ public class ChargeStateController {
      * @return - returns a Charge State Object
      * @throws ItemNotFoundException
      */
-    @GetMapping("/vehicles/{id}/command/charge_port_door_{state}")
+    @GetMapping("/vehicles/{id}/command/charge_port_door_open")
     public CommandResponse openChargePortById(@PathVariable Long id, Principal principal,
                                            HttpServletRequest request) throws ItemNotFoundException {
 
@@ -84,7 +84,5 @@ public class ChargeStateController {
             throw new ItemNotFoundException(e.getMessage());
         }
     }
-
-
 
 }
